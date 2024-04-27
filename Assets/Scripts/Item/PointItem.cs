@@ -4,6 +4,8 @@ public class PointItem : MonoBehaviour
 {
     private GameController gameController;
 
+    [SerializeField] private GameObject itemFeedbackVFX;
+
     [SerializeField] private int pointsToAdd;
 
     private void Awake()
@@ -16,7 +18,13 @@ public class PointItem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") == true)
         {
             gameController.AddPoints(pointsToAdd);
+            CreateItemFeedbackVFX();
             Destroy(gameObject);
         }
+    }
+
+    private void CreateItemFeedbackVFX()
+    {
+        Instantiate(itemFeedbackVFX, transform.position, transform.rotation);
     }
 }

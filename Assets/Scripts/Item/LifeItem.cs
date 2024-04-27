@@ -4,6 +4,8 @@ public class LifeItem : MonoBehaviour
 {
     private GameController gameController;
 
+    [SerializeField] private GameObject itemFeedbackVFX;
+
     [SerializeField] private int livesToAdd;
 
     private void Awake()
@@ -16,7 +18,13 @@ public class LifeItem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") == true)
         {
             gameController.AddLives(livesToAdd);
+            CreateItemFeedbackVFX();
             Destroy(gameObject);
         }
+    }
+
+    private void CreateItemFeedbackVFX()
+    {
+        Instantiate(itemFeedbackVFX, transform.position, transform.rotation);
     }
 }

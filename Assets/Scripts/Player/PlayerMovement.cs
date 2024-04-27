@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PlayerController playerController;
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -17,22 +19,29 @@ public class PlayerMovement : MonoBehaviour
     private float currentMoveInput = 0f;
     private bool isFacingRight = true;
 
-    private Vector2 spawnPosition;
-
     private void Awake()
     {
+        playerController = GetComponent<PlayerController>();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         groundLayer = LayerMask.GetMask("Ground");
-
-        spawnPosition = transform.position;
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        currentMoveInput = context.ReadValue<Vector2>().x;
-        TurnIfNeeded();
+        if (playerController.CanMove)
+        {
+            currentMoveInput = context.ReadValue<Vector2>().x;
+            TurnIfNeeded();
+        }
+    }
+
+    public void StopMove()
+    {
+        playerController.CanMove = false;
+        currentMoveInput = 0;
     }
 
     private void TurnIfNeeded()
@@ -51,18 +60,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && CheckIfPlayerIsGrounded())
+        if (playerController.CanMove)
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+            if (context.performed && CheckIfIsGrounded())
+            {
+                MakePlayerGoUp();
+            }
         }
     }
 
-    public void GoToStartPosition()
+    public void MakePlayerGoUp() // placeholder name...
     {
-        transform.position = spawnPosition;
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
     }
 
-    private bool CheckIfPlayerIsGrounded()
+    public bool CheckIfIsGrounded()
     {
         if (Physics2D.BoxCast(transform.position, BoxCastSize, 0, -transform.up, BoxCastOffset, groundLayer))
         {
@@ -76,23 +88,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CheckIfPlayerIsGrounded())
-        {
-            animator.SetBool("isFalling", false);
-            animator.SetBool("isJumping", false);
-        }
-        else
-        {
-            if (rigidBody.velocity.y > 0)
-            {
-                animator.SetBool("isJumping", true);
-            }
-            else if (rigidBody.velocity.y < 0)
-            {
-                animator.SetBool("isFalling", true);
-            }
-        }
-
         //Calculates the horizontal movement on the X-axis
         float directionX = currentMoveInput * moveSpeed * Time.fixedDeltaTime;
 
@@ -103,7 +98,9 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector2(directionX, rigidBody.velocity.y);
     }
 
-    //Visualizes the BoxCast
+    /// <summary>
+    /// Visualizes the BoxCast.
+    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * BoxCastOffset, BoxCastSize);

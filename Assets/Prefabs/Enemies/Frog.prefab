@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 9195972028231143027}
   - component: {fileID: 4533068111453163555}
   - component: {fileID: 1692126784589145618}
-  - component: {fileID: 2108960568193962997}
+  - component: {fileID: 300571437802681671}
+  - component: {fileID: -8358719466171598062}
   - component: {fileID: 4761149066878463295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,8 +109,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &2108960568193962997
-CapsuleCollider2D:
+--- !u!50 &300571437802681671
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3317310307058834476}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 4
+  m_Material: {fileID: 6200000, guid: 70567fe3ff78ca249a5cc5d8e2a3d317, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!61 &-8358719466171598062
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,9 +168,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03125, y: 0}
-  m_Size: {x: 1.5, y: 1.5}
-  m_Direction: 0
+  m_Offset: {x: 0, y: -0.09375}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.4857143, y: 0.5}
+    oldSize: {x: 2.1875, y: 2}
+    newSize: {x: 2.1875, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.25, y: 1.1875}
+  m_EdgeRadius: 0
 --- !u!114 &4761149066878463295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9498c28605cc742bac645e82c40aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDeathVFX: {fileID: 8708381127008542087, guid: b4f4d127145facf49b1230513493e9bb, type: 3}
+  flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
+  flashDuration: 0.1666667
+  isMovingRight: 0
+  minPosition: {x: 0, y: 0}
+  maxPosition: {x: 0, y: 0}
+  moveSpeed: 0
+  jumpForce: 0
+  BoxCastSize: {x: 0, y: 0}
+  BoxCastOffset: 0

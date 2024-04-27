@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 8984035916710262545}
   - component: {fileID: 7860381913383112020}
   - component: {fileID: 6657372244214541674}
-  - component: {fileID: 8134168597950455421}
+  - component: {fileID: 7433888051482261971}
+  - component: {fileID: -1219979943122967779}
+  - component: {fileID: 5998751704717940929}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -135,7 +137,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &7860381913383112020
 BoxCollider2D:
@@ -209,7 +211,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8134168597950455421}
+      - m_Target: {fileID: -1219979943122967779}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
@@ -225,7 +227,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8134168597950455421}
+      - m_Target: {fileID: -1219979943122967779}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -284,7 +286,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8134168597950455421
+--- !u!114 &7433888051482261971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656400038065325408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3fe7811807b6a844a2bb08d5a747d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1219979943122967779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,5 +312,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 400
   jumpForce: 15
-  BoxCastSize: {x: 0.8125, y: 0.8125}
-  BoxCastOffset: 0.84375
+  BoxCastSize: {x: 0.75, y: 0.6875}
+  BoxCastOffset: 0.71875
+--- !u!114 &5998751704717940929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656400038065325408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4458be44df29ec469ccdc5ef89d6c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
+  flashDuration: 0.1666667

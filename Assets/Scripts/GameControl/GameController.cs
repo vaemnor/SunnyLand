@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private SceneController sceneController;
-    private PlayerMovement playerMovement;
+    private PlayerController playerController;
 
     [SerializeField] private int level;
 
@@ -19,8 +18,7 @@ public class GameController : MonoBehaviour
 
     private void Initialize()
     {
-        sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
-        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         UpdateLevelDisplay();
         UpdateLivesDisplay();
@@ -49,24 +47,26 @@ public class GameController : MonoBehaviour
         UpdateLivesDisplay();
     }
 
-    public void CheckIfLivesAreGreaterThanOne()
+    public void HurtOrKillPlayer()
     {
-        if (WorldState.Lives > 1)
+        if (!(playerController.IsHurt || playerController.IsDying))
         {
-            RemoveLife();
-        }
-        else
-        {
-            sceneController.LoadGameOverScreen();
+            if (WorldState.Lives > 1)
+            {
+                RemoveLife();
+                playerController.HurtPlayer();
+            }
+            else
+            {
+                playerController.KillPlayer();
+            }
         }
     }
 
     private void RemoveLife()
     {
         WorldState.Lives--;
-
         UpdateLivesDisplay();
-        playerMovement.GoToStartPosition();
     }
 
     public void AddPoints(int pointsToAdd)

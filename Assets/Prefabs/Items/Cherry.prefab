@@ -155,4 +155,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6946f917d5ffa6a47995b41273cd0d55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemFeedbackVFX: {fileID: 4778396141555987751, guid: df5baae31b75624459cef060543e52b9, type: 3}
   livesToAdd: 1

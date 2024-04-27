@@ -2,5 +2,65 @@ using UnityEngine;
 
 public class FlyingEnemy : Enemy
 {
+    [SerializeField] private bool isMovingUp;
 
+    [SerializeField] private Vector2 minPosition;
+    [SerializeField] private Vector2 maxPosition;
+
+    [SerializeField] private float moveSpeed;
+
+    private Vector2 upwardVelocity;
+    private Vector2 downwardVelocity;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        Vector2 upwardDirection = maxPosition - minPosition;
+        upwardDirection.Normalize();
+
+        Vector2 downwardDirection = minPosition - maxPosition;
+        downwardDirection.Normalize();
+
+        upwardVelocity = upwardDirection * moveSpeed;
+        downwardVelocity = downwardDirection * moveSpeed;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isDying)
+        {
+            if (rigidBody.position.y < minPosition.y && !isMovingUp)
+            {
+                MoveUp();
+            }
+            else if (rigidBody.position.y > maxPosition.y && isMovingUp)
+            {
+                MoveDown();
+            }
+            else
+            {
+                if (isMovingUp)
+                {
+                    MoveUp();
+                }
+                else
+                {
+                    MoveDown();
+                }
+            }
+        }
+    }
+
+    private void MoveUp()
+    {
+        isMovingUp = true;
+        rigidBody.MovePosition(rigidBody.position + upwardVelocity * Time.fixedDeltaTime);
+    }
+
+    private void MoveDown()
+    {
+        isMovingUp = false;
+        rigidBody.MovePosition(rigidBody.position + downwardVelocity * Time.fixedDeltaTime);
+    }
 }

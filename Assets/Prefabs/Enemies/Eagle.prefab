@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2664066353218278207}
   - component: {fileID: 2870621495939360663}
   - component: {fileID: 8635702983747676019}
-  - component: {fileID: 627590068500481801}
-  - component: {fileID: 3393096090822880324}
-  m_Layer: 0
+  - component: {fileID: 1226974588509063560}
+  - component: {fileID: 5694494007589404757}
+  - component: {fileID: 3992977800891982088}
+  m_Layer: 6
   m_Name: Eagle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,8 +109,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &627590068500481801
-CapsuleCollider2D:
+--- !u!50 &1226974588509063560
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2564977700333390732}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 70567fe3ff78ca249a5cc5d8e2a3d317, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!61 &5694494007589404757
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,10 +168,20 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.03125}
-  m_Size: {x: 2.25, y: 2.25}
-  m_Direction: 0
---- !u!114 &3393096090822880324
+  m_Offset: {x: 0, y: -0.375}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.4878049}
+    oldSize: {x: 2.5, y: 2.5625}
+    newSize: {x: 2.5, y: 2.5625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.25, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &3992977800891982088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,3 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a30b14f31f6ce4fa05adb84987ff09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDeathVFX: {fileID: 8708381127008542087, guid: b4f4d127145facf49b1230513493e9bb, type: 3}
+  flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
+  flashDuration: 0.1666667
+  isMovingUp: 0
+  minPosition: {x: 0, y: 0}
+  maxPosition: {x: 0, y: 0}
+  moveSpeed: 6

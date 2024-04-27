@@ -13,7 +13,7 @@ public class Danger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            gameController.CheckIfLivesAreGreaterThanOne();
+            gameController.HurtOrKillPlayer();
         }
     }
 }

@@ -10,30 +10,26 @@ public class CameraMovement : MonoBehaviour
     /// <summary>
     /// Left border of camera movement
     /// </summary>
-    [SerializeField]
     [Tooltip("Left border of camera movement")]
-    private float minX;
+    [SerializeField] private float minX;
 
     /// <summary>
     /// Right border of camera movement
     /// </summary>
-    [SerializeField]
     [Tooltip("Right border of camera movement")]
-    private float maxX;
+    [SerializeField] private float maxX;
 
     /// <summary>
     /// Downward border of camera movement
     /// </summary>
-    [SerializeField]
     [Tooltip("Downward border of camera movement")]
-    private float minY;
+    [SerializeField] private float minY;
 
     /// <summary>
     /// Upward border of camera movement
     /// </summary>
-    [SerializeField]
     [Tooltip("Upward border of camera movement")]
-    private float maxY;
+    [SerializeField] private float maxY;
 
     private void Awake()
     {
@@ -62,20 +58,18 @@ public class CameraMovement : MonoBehaviour
                 newPosition.x = maxX;
             }
 
-            /*
             if (playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
             {
                 newPosition.y = playerTransform.position.y;
             }
-            else if (playerTransform.position.x < minY)
+            else if (playerTransform.position.y < minY)
             {
                 newPosition.y = minY;
             }
-            else if (playerTransform.position.x > maxY)
+            else if (playerTransform.position.y > maxY)
             {
                 newPosition.y = maxY;
             }
-            */
 
             transform.position = newPosition;
         }
