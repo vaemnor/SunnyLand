@@ -74,6 +74,15 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
     }
 
+    public void Rebound(float directionX)
+    {
+        StopMove();
+        currentMoveInput = directionX;
+
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce / 2f);
+        Debug.Log($"Rebounding... {rigidBody.velocity}");
+    }
+
     public bool CheckIfIsGrounded()
     {
         if (Physics2D.BoxCast(transform.position, BoxCastSize, 0, -transform.up, BoxCastOffset, groundLayer))
@@ -89,13 +98,23 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         //Calculates the horizontal movement on the X-axis
-        float directionX = currentMoveInput * moveSpeed * Time.fixedDeltaTime;
+        float directionX = currentMoveInput * moveSpeed;
 
         //Informs the animator which movement speed the player currently has
         animator.SetFloat("moveSpeed", Mathf.Abs(directionX));
 
         //Informs the physics engine in which direction and orientation the player is moving and at what movement speed
         rigidBody.velocity = new Vector2(directionX, rigidBody.velocity.y);
+
+        if (playerController.IsHurt)
+        {
+            if (CheckIfIsGrounded())
+            {
+                playerController.IsHurt = false;
+                playerController.CanMove = true;
+                currentMoveInput = 0;
+            }
+        }
     }
 
     /// <summary>

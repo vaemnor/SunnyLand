@@ -48,9 +48,6 @@ public class PlayerAnimation : MonoBehaviour
 
         // After the pause, swap back to the original material.
         spriteRenderer.material = originalMaterial;
-
-        // After the pause, stop the player's hurt state.
-        playerController.IsHurt = false;
     }
 
     public void PlayDeathAnimation()

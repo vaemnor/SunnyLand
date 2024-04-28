@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4db936bded2cc43b0a7cebd3de5548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 400
+  moveSpeed: 6.6666665
   jumpForce: 15
   BoxCastSize: {x: 0.75, y: 0.6875}
   BoxCastOffset: 0.71875
