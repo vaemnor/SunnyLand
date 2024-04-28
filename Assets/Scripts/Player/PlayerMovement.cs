@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
         currentMoveInput = directionX;
 
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce / 2f);
-        Debug.Log($"Rebounding... {rigidBody.velocity}");
     }
 
     public bool CheckIfIsGrounded()
@@ -106,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         //Informs the physics engine in which direction and orientation the player is moving and at what movement speed
         rigidBody.velocity = new Vector2(directionX, rigidBody.velocity.y);
 
-        if (playerController.IsHurt)
+        if (playerController.IsHurt && rigidBody.velocity.y < 0)
         {
             if (CheckIfIsGrounded())
             {
