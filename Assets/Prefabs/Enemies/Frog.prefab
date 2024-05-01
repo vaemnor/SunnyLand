@@ -195,11 +195,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyDeathVFX: {fileID: 8708381127008542087, guid: b4f4d127145facf49b1230513493e9bb, type: 3}
   flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
-  flashDuration: 0.1666667
+  flashDuration: 0.2
   isMovingRight: 0
   minPosition: {x: 0, y: 0}
   maxPosition: {x: 0, y: 0}
-  moveSpeed: 0
-  jumpForce: 0
-  BoxCastSize: {x: 0, y: 0}
-  BoxCastOffset: 0
+  moveSpeed: 4
+  jumpForce: 15
+  BoxCastSize: {x: 1.125, y: 0.75}
+  BoxCastOffset: 0.375

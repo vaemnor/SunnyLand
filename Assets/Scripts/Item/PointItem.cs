@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class PointItem : MonoBehaviour
 {
-    private GameController gameController;
+    protected GameController gameController;
 
-    [SerializeField] private GameObject itemFeedbackVFX;
+    [SerializeField] protected GameObject itemFeedbackVFX;
 
-    [SerializeField] private int pointsToAdd;
+    [SerializeField] protected int pointsToAdd;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
@@ -23,7 +23,7 @@ public class PointItem : MonoBehaviour
         }
     }
 
-    private void CreateItemFeedbackVFX()
+    protected void CreateItemFeedbackVFX()
     {
         Instantiate(itemFeedbackVFX, transform.position, transform.rotation);
     }

@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class Chest : PointItem
+{
+    private Animator animator;
+    private Collider2D collider;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        animator = GetComponent<Animator>();
+        collider = GetComponent<Collider2D>();
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") == true)
+        {
+            gameController.AddPoints(pointsToAdd);
+            CreateItemFeedbackVFX();
+            collider.enabled = false;
+            animator.SetTrigger("isOpen");
+        }
+    }
+}

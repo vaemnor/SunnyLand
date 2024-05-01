@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6.6666665
   jumpForce: 15
+  invulnerabilityDuration: 0.2
   BoxCastSize: {x: 0.75, y: 0.6875}
   BoxCastOffset: 0.71875
 --- !u!114 &5998751704717940929
@@ -327,4 +328,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
-  flashDuration: 0.1666667
+  flashDuration: 0.2

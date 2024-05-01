@@ -47,14 +47,14 @@ public class GameController : MonoBehaviour
         UpdateLivesDisplay();
     }
 
-    public void HurtOrKillPlayer()
+    public void HurtOrKillPlayer(float reboundDirection)
     {
         if (!(playerController.IsHurt || playerController.IsDying))
         {
             if (WorldState.Lives > 1)
             {
                 RemoveLife();
-                playerController.HurtPlayer();
+                playerController.HurtPlayer(reboundDirection);
             }
             else
             {

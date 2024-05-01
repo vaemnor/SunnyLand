@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
+
+    [Tooltip("Duration of the invulnerability when hit.")]
+    [SerializeField] private float invulnerabilityDuration;
 
     [SerializeField] private Vector2 BoxCastSize;
     [SerializeField] private float BoxCastOffset;
@@ -40,18 +44,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMove()
     {
+        currentMoveInput = 0f;
         playerController.CanMove = false;
-        currentMoveInput = 0;
     }
 
     private void TurnIfNeeded()
     {
-        if (currentMoveInput > 0 && !isFacingRight)
+        if (currentMoveInput > 0f && !isFacingRight)
         {
             isFacingRight = true;
             spriteRenderer.flipX = false;
         }
-        else if (currentMoveInput < 0 && isFacingRight)
+        else if (currentMoveInput < 0f && isFacingRight)
         {
             isFacingRight = false;
             spriteRenderer.flipX = true;
@@ -74,17 +78,28 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
     }
 
-    public void Rebound(float directionX)
+    public void Rebound(float reboundDirection)
     {
         StopMove();
-        currentMoveInput = directionX;
+        StartCoroutine(MakePlayerInvulnerable());
 
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce / 2f);
+        currentMoveInput = reboundDirection;
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce * 0.5f);
+    }
+
+    private IEnumerator MakePlayerInvulnerable()
+    {
+        yield return new WaitForSeconds(invulnerabilityDuration);
+
+        playerController.IsHurt = false;
+
+        currentMoveInput = 0f;
+        playerController.CanMove = true;
     }
 
     public bool CheckIfIsGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, BoxCastSize, 0, -transform.up, BoxCastOffset, groundLayer))
+        if (Physics2D.BoxCast(transform.position, BoxCastSize, 0f, -transform.up, BoxCastOffset, groundLayer))
         {
             return true;
         }
@@ -104,16 +119,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Informs the physics engine in which direction and orientation the player is moving and at what movement speed
         rigidBody.velocity = new Vector2(directionX, rigidBody.velocity.y);
-
-        if (playerController.IsHurt && rigidBody.velocity.y < 0)
-        {
-            if (CheckIfIsGrounded())
-            {
-                playerController.IsHurt = false;
-                playerController.CanMove = true;
-                currentMoveInput = 0;
-            }
-        }
     }
 
     /// <summary>

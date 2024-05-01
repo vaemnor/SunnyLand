@@ -46,10 +46,11 @@ public class PlayerController : MonoBehaviour
         transform.position = spawnPosition;
     }
 
-    public void HurtPlayer()
+    public void HurtPlayer(float reboundDirection)
     {
         IsHurt = true;
 
+        playerMovement.Rebound(reboundDirection);
         playerAnimation.PlayHurtAnimation();
     }
 

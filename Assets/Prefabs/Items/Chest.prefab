@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7884683753517567853}
   - component: {fileID: 5525189807588984004}
   - component: {fileID: 4045024857921957603}
-  - component: {fileID: 7191244788588794577}
+  - component: {fileID: 9108032398202522820}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -157,7 +157,7 @@ PolygonCollider2D:
       - {x: 0.75, y: -0.75}
       - {x: 0.75, y: 0.25}
   m_UseDelaunayMesh: 0
---- !u!114 &7191244788588794577
+--- !u!114 &9108032398202522820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8763718984946503407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 190cef714b35d5e478ea55338738e9f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b47d39947800bf43adfd5466dca7ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemFeedbackVFX: {fileID: 4778396141555987751, guid: df5baae31b75624459cef060543e52b9, type: 3}

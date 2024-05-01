@@ -17,14 +17,12 @@ public class Danger : MonoBehaviour
         {
             if (playerMovement.transform.position.x < transform.position.x)
             {
-                playerMovement.Rebound(-1f);
+                gameController.HurtOrKillPlayer(-1f);
             }
             else if (playerMovement.transform.position.x > transform.position.x)
             {
-                playerMovement.Rebound(1f);
+                gameController.HurtOrKillPlayer(1f);
             }
-
-            gameController.HurtOrKillPlayer();
         }
     }
 }

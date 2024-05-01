@@ -34,9 +34,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !isDying)
         {
-            Vector2 collisionPoint = collision.GetContact(0).point;
-
-            if (collisionPoint.y >= enemyCollider.bounds.max.y -0.125f) // -0.125 because collision detection is faulty when enemies move on Y-axis
+            if (collision.GetContact(0).normal.y == -1f)
             {
                 playerMovement.MakePlayerGoUp();
 
@@ -49,14 +47,12 @@ public class Enemy : MonoBehaviour
             {
                 if (playerMovement.transform.position.x < transform.position.x)
                 {
-                    playerMovement.Rebound(-1f);
+                    gameController.HurtOrKillPlayer(-1f);
                 }
                 else if (playerMovement.transform.position.x > transform.position.x)
                 {
-                    playerMovement.Rebound(1f);
+                    gameController.HurtOrKillPlayer(1f);
                 }
-
-                gameController.HurtOrKillPlayer();
             }
         }
     }

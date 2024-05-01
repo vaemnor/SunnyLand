@@ -64,12 +64,12 @@ public class PlayerAnimation : MonoBehaviour
         }
         else
         {
-            if (rigidBody.velocity.y > 0)
+            if (rigidBody.velocity.y >= 0f)
             {
                 animator.SetBool("isJumping", true);
                 animator.SetBool("isFalling", false);
             }
-            else if (rigidBody.velocity.y < 0)
+            else if (rigidBody.velocity.y <= 0f)
             {
                 animator.SetBool("isFalling", true);
                 animator.SetBool("isJumping", false);

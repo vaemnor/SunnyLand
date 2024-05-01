@@ -4,60 +4,50 @@ using UnityEngine;
 public class JumpingEnemy : Enemy
 {
     private Animator animator;
-    private LayerMask groundLayer;
 
     [SerializeField] private bool isMovingRight;
-
-    [SerializeField] private Vector2 minPosition;
-    [SerializeField] private Vector2 maxPosition;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
-    [SerializeField] private Vector2 BoxCastSize;
-    [SerializeField] private float BoxCastOffset;
-
     private float rightDirection;
     private float leftDirection;
 
-    private bool isIdle;
+    private bool isIdle = false;
+    private bool isGrounded = true;
 
     protected override void Awake()
     {
         base.Awake();
 
         animator = GetComponent<Animator>();
-        groundLayer = LayerMask.GetMask("Ground");
 
-        rightDirection = 1 * moveSpeed;
-        leftDirection = -1 * moveSpeed;
+        rightDirection = 1f * moveSpeed;
+        leftDirection = -1f * moveSpeed;
+
+        if (!isIdle)
+        {
+            StartCoroutine(Idle());
+        }
     }
 
     private void FixedUpdate()
     {
         if (!isDying)
         {
-            if (CheckIfIsGrounded())
+            if (isGrounded)
             {
-                animator.SetBool("isJumping", false);
-                animator.SetBool("isFalling", false);
-
-                if (!isIdle)
-                {
-                    StartCoroutine(Idle());
-                }
+                SetIdleAnimation();
             }
             else
             {
-                if (rigidBody.velocity.y > 0)
+                if (rigidBody.velocity.y >= 0f)
                 {
-                    animator.SetBool("isJumping", true);
-                    animator.SetBool("isFalling", false);
+                    SetJumpingAnimation();
                 }
-                else if (rigidBody.velocity.y < 0)
+                else if (rigidBody.velocity.y <= 0f)
                 {
-                    animator.SetBool("isFalling", true);
-                    animator.SetBool("isJumping", false);
+                    SetFallingAnimation();
                 }
             }
 
@@ -69,49 +59,56 @@ public class JumpingEnemy : Enemy
         }
     }
 
-    private bool CheckIfIsGrounded()
-    {
-        if (Physics2D.BoxCast(transform.position, BoxCastSize, 0, -transform.up, BoxCastOffset, groundLayer))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     private IEnumerator Idle()
     {
         isIdle = true;
-        rigidBody.velocity = Vector2.zero; // This is called even when Frog jumps, because it's still considered grounded for the first few frames after jumping
+        rigidBody.velocity = Vector2.zero;
 
         yield return new WaitForSeconds(2f);
 
         if (isMovingRight)
         {
-            JumpLeft();
+            JumpRight();
         }
         else
         {
-            JumpRight();
+            JumpLeft();
         }
 
         isIdle = false;
     }
 
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+
+            if (!isIdle)
+            {
+                StartCoroutine(Idle());
+            }
+        }
+    }
+
     private void JumpRight()
     {
-        isMovingRight = true;
         rigidBody.velocity = new Vector2(rightDirection, jumpForce);
         spriteRenderer.flipX = true;
+
+        isMovingRight = false;
+        isGrounded = false;
     }
 
     private void JumpLeft()
     {
-        isMovingRight = false;
         rigidBody.velocity = new Vector2(leftDirection, jumpForce);
         spriteRenderer.flipX = false;
+
+        isMovingRight = true;
+        isGrounded = false;
     }
 
     private void StopMove()
@@ -120,11 +117,21 @@ public class JumpingEnemy : Enemy
         rigidBody.gravityScale = 0f;
     }
 
-    /// <summary>
-    /// Visualizes the BoxCast.
-    /// </summary>
-    private void OnDrawGizmos()
+    private void SetIdleAnimation()
     {
-        Gizmos.DrawWireCube(transform.position - transform.up * BoxCastOffset, BoxCastSize);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isFalling", false);
+    }
+
+    private void SetJumpingAnimation()
+    {
+        animator.SetBool("isJumping", true);
+        animator.SetBool("isFalling", false);
+    }
+
+    private void SetFallingAnimation()
+    {
+        animator.SetBool("isFalling", true);
+        animator.SetBool("isJumping", false);
     }
 }
