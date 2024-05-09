@@ -3,14 +3,14 @@ using UnityEngine;
 public class Chest : PointItem
 {
     private Animator animator;
-    private Collider2D collider;
+    private Collider2D chestCollider;
 
     protected override void Awake()
     {
         base.Awake();
 
         animator = GetComponent<Animator>();
-        collider = GetComponent<Collider2D>();
+        chestCollider = GetComponent<Collider2D>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -18,8 +18,11 @@ public class Chest : PointItem
         if (collision.gameObject.CompareTag("Player") == true)
         {
             gameController.AddPoints(pointsToAdd);
+
             CreateItemFeedbackVFX();
-            collider.enabled = false;
+            audioController.PlaySoundEffect(pointItemFeedbackSFX, pointItemFeedbackSFXVolume);
+
+            chestCollider.enabled = false;
             animator.SetTrigger("isOpen");
         }
     }

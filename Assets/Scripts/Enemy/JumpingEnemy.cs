@@ -10,6 +10,12 @@ public class JumpingEnemy : Enemy
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
+    [SerializeField] private AudioClip enemyJumpSFX;
+    [SerializeField] [Range(0, 1)] private float enemyJumpSFXVolume = 0f;
+
+    [SerializeField] private AudioClip enemyLandSFX;
+    [SerializeField] [Range(0, 1)] private float enemyLandSFXVolume = 0f;
+
     private float rightDirection;
     private float leftDirection;
 
@@ -41,11 +47,11 @@ public class JumpingEnemy : Enemy
             }
             else
             {
-                if (rigidBody.velocity.y >= 0f)
+                if (rigidBody.velocity.y > 0f)
                 {
                     SetJumpingAnimation();
                 }
-                else if (rigidBody.velocity.y <= 0f)
+                else if (rigidBody.velocity.y < 0f)
                 {
                     SetFallingAnimation();
                 }
@@ -64,15 +70,17 @@ public class JumpingEnemy : Enemy
         isIdle = true;
         rigidBody.velocity = Vector2.zero;
 
+        audioController.PlaySoundEffect(enemyLandSFX, enemyLandSFXVolume);
+
         yield return new WaitForSeconds(2f);
 
         if (isMovingRight)
         {
-            JumpRight();
+            Jump("right");
         }
         else
         {
-            JumpLeft();
+            Jump("left");
         }
 
         isIdle = false;
@@ -93,22 +101,25 @@ public class JumpingEnemy : Enemy
         }
     }
 
-    private void JumpRight()
+    private void Jump(string direction)
     {
-        rigidBody.velocity = new Vector2(rightDirection, jumpForce);
-        spriteRenderer.flipX = true;
+        if (direction == "right")
+        {
+            rigidBody.velocity = new Vector2(rightDirection, jumpForce);
+            spriteRenderer.flipX = true;
 
-        isMovingRight = false;
+            isMovingRight = false;
+        }
+        else if (direction == "left")
+        {
+            rigidBody.velocity = new Vector2(leftDirection, jumpForce);
+            spriteRenderer.flipX = false;
+
+            isMovingRight = true;
+        }
+
         isGrounded = false;
-    }
-
-    private void JumpLeft()
-    {
-        rigidBody.velocity = new Vector2(leftDirection, jumpForce);
-        spriteRenderer.flipX = false;
-
-        isMovingRight = true;
-        isGrounded = false;
+        audioController.PlaySoundEffect(enemyJumpSFX, enemyJumpSFXVolume);
     }
 
     private void StopMove()

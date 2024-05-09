@@ -10,16 +10,18 @@ public class PlayerAnimation : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBody;
 
-    [Tooltip("Material to switch to during the flash.")]
+    [Tooltip("Material to switch to during the flash")]
     [SerializeField] private Material flashMaterial;
 
-    [Tooltip("Duration of the flash.")]
+    [Tooltip("Duration of the flash")]
     [SerializeField] private float flashDuration;
 
     /// <summary>
     /// The material that was in use, when the script started.
     /// </summary>
     private Material originalMaterial;
+
+    private bool isFalling = false;
 
     private void Awake()
     {
@@ -57,20 +59,26 @@ public class PlayerAnimation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerMovement.CheckIfIsGrounded())
+        if (playerMovement.CheckIfIsGrounded() && isFalling)
         {
+            isFalling = false;
+
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", false);
+
+            playerController.PlayPlayerLandSFX();
         }
-        else
+        else if (!playerMovement.CheckIfIsGrounded())
         {
-            if (rigidBody.velocity.y >= 0f)
+            if (rigidBody.velocity.y > 0f)
             {
                 animator.SetBool("isJumping", true);
                 animator.SetBool("isFalling", false);
             }
-            else if (rigidBody.velocity.y <= 0f)
+            else if (rigidBody.velocity.y < 0f)
             {
+                isFalling = true;
+
                 animator.SetBool("isFalling", true);
                 animator.SetBool("isJumping", false);
             }

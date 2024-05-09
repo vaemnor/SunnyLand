@@ -298,6 +298,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fe7811807b6a844a2bb08d5a747d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footStepSFX1: {fileID: 8300000, guid: f35eb1d4c05ae8746b0d57ab69995ee4, type: 3}
+  footStepSFX1Volume: 1
+  footStepSFX2: {fileID: 8300000, guid: 5a706fc2fd0dd73418cca49e50917791, type: 3}
+  footStepSFX2Volume: 1
+  playerJumpSFX: {fileID: 8300000, guid: 473242e46132ac64887f84ec1a9be2e2, type: 3}
+  playerJumpSFXVolume: 1
+  playerLandSFX: {fileID: 8300000, guid: 2c4b803ff9d72884ab2d8a29279e9b28, type: 3}
+  playerLandSFXVolume: 1
+  playerHurtSFX: {fileID: 8300000, guid: 4ece74626dac44a448fec372071f277e, type: 3}
+  playerHurtSFXVolume: 1
+  playerDieSFX: {fileID: 8300000, guid: 1e4e3406dfc0be745a6246228bd3722d, type: 3}
+  playerDieSFXVolume: 1
 --- !u!114 &-1219979943122967779
 MonoBehaviour:
   m_ObjectHideFlags: 0

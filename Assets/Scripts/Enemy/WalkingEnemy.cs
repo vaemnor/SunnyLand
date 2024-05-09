@@ -9,6 +9,12 @@ public class WalkingEnemy : Enemy
 
     [SerializeField] private float moveSpeed;
 
+    [SerializeField] private AudioClip footStepSFX1;
+    [SerializeField] [Range(0, 1)] private float footStepSFX1Volume = 0f;
+
+    [SerializeField] private AudioClip footStepSFX2;
+    [SerializeField] [Range(0, 1)] private float footStepSFX2Volume = 0f;
+
     private float rightDirection;
     private float leftDirection;
 
@@ -68,5 +74,21 @@ public class WalkingEnemy : Enemy
     {
         rigidBody.velocity = Vector2.zero;
         rigidBody.gravityScale = 0f;
+    }
+
+    /// <summary>
+    /// This method is called by an animation event in the player_run animation
+    /// </summary>
+    private void PlayFootStepSFX1()
+    {
+        audioController.PlaySoundEffect(footStepSFX1, footStepSFX1Volume);
+    }
+
+    /// <summary>
+    /// This method is called by an animation event in the player_run animation
+    /// </summary>
+    private void PlayFootStepSFX2()
+    {
+        audioController.PlaySoundEffect(footStepSFX2, footStepSFX2Volume);
     }
 }

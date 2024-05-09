@@ -4,13 +4,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected GameController gameController;
+    protected AudioController audioController;
     protected PlayerMovement playerMovement;
 
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigidBody;
     protected Collider2D enemyCollider;
-
-    [SerializeField] protected GameObject enemyDeathVFX;
 
     [Tooltip("Material to switch to during the flash.")]
     [SerializeField] protected Material flashMaterial;
@@ -18,11 +17,16 @@ public class Enemy : MonoBehaviour
     [Tooltip("Duration of the flash.")]
     [SerializeField] protected float flashDuration;
 
+    [SerializeField] protected GameObject enemyDeathVFX;
+    [SerializeField] protected AudioClip enemyDeathSFX;
+    [SerializeField] [Range(0, 1)] protected float enemyDeathSFXVolume = 0f;
+
     protected bool isDying = false;
 
     protected virtual void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,6 +46,7 @@ public class Enemy : MonoBehaviour
 
                 StartCoroutine(FlashAndDestroy());
                 CreateEnemyDeathVFX();
+                audioController.PlaySoundEffect(enemyDeathSFX, enemyDeathSFXVolume);
             }
             else
             {

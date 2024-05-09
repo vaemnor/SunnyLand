@@ -169,5 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b47d39947800bf43adfd5466dca7ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemFeedbackVFX: {fileID: 4778396141555987751, guid: df5baae31b75624459cef060543e52b9, type: 3}
   pointsToAdd: 10
+  itemFeedbackVFX: {fileID: 4778396141555987751, guid: df5baae31b75624459cef060543e52b9, type: 3}
+  pointItemFeedbackSFX: {fileID: 8300000, guid: b6adcf6a98a00c848980b6b3d1525b5b, type: 3}
+  pointItemFeedbackSFXVolume: 1

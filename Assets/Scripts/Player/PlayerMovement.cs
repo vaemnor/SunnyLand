@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
-    [Tooltip("Duration of the invulnerability when hit.")]
+    [Tooltip("Duration of the invulnerability when hit")]
     [SerializeField] private float invulnerabilityDuration;
 
     [SerializeField] private Vector2 BoxCastSize;
@@ -76,6 +76,11 @@ public class PlayerMovement : MonoBehaviour
     public void MakePlayerGoUp() // placeholder name...
     {
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+
+        if (!playerController.IsDying)
+        {
+            playerController.PlayPlayerJumpSFX();
+        }
     }
 
     public void Rebound(float reboundDirection)
