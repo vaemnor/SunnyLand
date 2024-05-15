@@ -4,12 +4,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected GameController gameController;
-    protected AudioController audioController;
     protected PlayerMovement playerMovement;
 
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigidBody;
     protected Collider2D enemyCollider;
+    protected AudioSource audioSource;
 
     [Tooltip("Material to switch to during the flash.")]
     [SerializeField] protected Material flashMaterial;
@@ -26,12 +26,12 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
         enemyCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -44,9 +44,9 @@ public class Enemy : MonoBehaviour
 
                 isDying = true;
 
-                StartCoroutine(FlashAndDestroy());
+                StartCoroutine(Flash());
                 CreateEnemyDeathVFX();
-                audioController.PlaySoundEffect(enemyDeathSFX, enemyDeathSFXVolume);
+                StartCoroutine(CreateEnemyDeathSFXAndDestroy());
             }
             else
             {
@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected IEnumerator FlashAndDestroy()
+    protected IEnumerator Flash()
     {
         // Swap to the flashMaterial.
         spriteRenderer.material = flashMaterial;
@@ -70,12 +70,22 @@ public class Enemy : MonoBehaviour
         // Pause the execution of this function for "flashDuration" seconds.
         yield return new WaitForSeconds(flashDuration);
 
-        // After the pause, destroy the enemy.
-        Destroy(gameObject);
+        // After the pause, hide the enemy.
+        spriteRenderer.enabled = false;
     }
 
     protected void CreateEnemyDeathVFX()
     {
         Instantiate(enemyDeathVFX, transform.position, transform.rotation);
+    }
+
+    protected IEnumerator CreateEnemyDeathSFXAndDestroy()
+    {
+        enemyCollider.enabled = false;
+        audioSource.PlayOneShot(enemyDeathSFX, enemyDeathSFXVolume);
+
+        yield return new WaitForSeconds(enemyDeathSFX.length);
+
+        Destroy(gameObject);
     }
 }

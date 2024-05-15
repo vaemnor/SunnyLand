@@ -1,9 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class LifeItem : MonoBehaviour
 {
     private GameController gameController;
-    private AudioController audioController;
+
+    private SpriteRenderer spriteRenderer;
+    private Collider2D lifeItemCollider;
+    private AudioSource audioSource;
 
     [SerializeField] [Range(1, 100)] private int livesToAdd;
 
@@ -14,7 +18,10 @@ public class LifeItem : MonoBehaviour
     private void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        lifeItemCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,14 +31,23 @@ public class LifeItem : MonoBehaviour
             gameController.AddLives(livesToAdd);
 
             CreateItemFeedbackVFX();
-            audioController.PlaySoundEffect(lifeItemFeedbackSFX, lifeItemFeedbackSFXVolume);
-
-            Destroy(gameObject);
+            StartCoroutine(CreateItemFeedbackSFXAndDestroy());
         }
     }
 
     private void CreateItemFeedbackVFX()
     {
         Instantiate(itemFeedbackVFX, transform.position, transform.rotation);
+    }
+
+    private IEnumerator CreateItemFeedbackSFXAndDestroy()
+    {
+        spriteRenderer.enabled = false;
+        lifeItemCollider.enabled = false;
+        audioSource.PlayOneShot(lifeItemFeedbackSFX, lifeItemFeedbackSFXVolume);
+
+        yield return new WaitForSeconds(lifeItemFeedbackSFX.length);
+
+        Destroy(gameObject);
     }
 }

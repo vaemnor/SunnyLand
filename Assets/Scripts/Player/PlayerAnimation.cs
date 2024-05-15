@@ -66,7 +66,10 @@ public class PlayerAnimation : MonoBehaviour
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", false);
 
-            playerController.PlayPlayerLandSFX();
+            if (!playerController.IsDying)
+            {
+                playerController.PlayPlayerLandSFX();
+            }
         }
         else if (!playerMovement.CheckIfIsGrounded())
         {

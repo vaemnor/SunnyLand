@@ -81,7 +81,7 @@ public class WalkingEnemy : Enemy
     /// </summary>
     private void PlayFootStepSFX1()
     {
-        audioController.PlaySoundEffect(footStepSFX1, footStepSFX1Volume);
+        audioSource.PlayOneShot(footStepSFX1, footStepSFX1Volume);
     }
 
     /// <summary>
@@ -89,6 +89,6 @@ public class WalkingEnemy : Enemy
     /// </summary>
     private void PlayFootStepSFX2()
     {
-        audioController.PlaySoundEffect(footStepSFX2, footStepSFX2Volume);
+        audioSource.PlayOneShot(footStepSFX2, footStepSFX2Volume);
     }
 }

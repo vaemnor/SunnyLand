@@ -30,11 +30,6 @@ public class JumpingEnemy : Enemy
 
         rightDirection = 1f * moveSpeed;
         leftDirection = -1f * moveSpeed;
-
-        if (!isIdle)
-        {
-            StartCoroutine(Idle());
-        }
     }
 
     private void FixedUpdate()
@@ -70,8 +65,6 @@ public class JumpingEnemy : Enemy
         isIdle = true;
         rigidBody.velocity = Vector2.zero;
 
-        audioController.PlaySoundEffect(enemyLandSFX, enemyLandSFXVolume);
-
         yield return new WaitForSeconds(2f);
 
         if (isMovingRight)
@@ -98,6 +91,8 @@ public class JumpingEnemy : Enemy
             {
                 StartCoroutine(Idle());
             }
+
+            audioSource.PlayOneShot(enemyLandSFX, enemyLandSFXVolume);
         }
     }
 
@@ -119,7 +114,7 @@ public class JumpingEnemy : Enemy
         }
 
         isGrounded = false;
-        audioController.PlaySoundEffect(enemyJumpSFX, enemyJumpSFXVolume);
+        audioSource.PlayOneShot(enemyJumpSFX, enemyJumpSFXVolume);
     }
 
     private void StopMove()

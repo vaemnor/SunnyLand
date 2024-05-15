@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private AudioController audioController;
     private PlayerMovement playerMovement;
     private PlayerAnimation playerAnimation;
 
     private Collider2D playerCollider;
-    
+    private AudioSource audioSource;
+
     private Vector2 spawnPosition;
 
     [SerializeField] private AudioClip footStepSFX1;
@@ -52,11 +52,11 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
 
         playerCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
 
         spawnPosition = transform.position;
     }
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.Rebound(reboundDirection);
         playerAnimation.PlayHurtAnimation();
 
-        audioController.PlaySoundEffect(playerHurtSFX, playerHurtSFXVolume);
+        audioSource.PlayOneShot(playerHurtSFX, playerHurtSFXVolume);
     }
 
     public void KillPlayer()
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.MakePlayerGoUp();
         playerAnimation.PlayDeathAnimation();
 
-        audioController.PlaySoundEffect(playerDieSFX, playerDieSFXVolume);
+        audioSource.PlayOneShot(playerDieSFX, playerDieSFXVolume);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayFootStepSFX1()
     {
-        audioController.PlaySoundEffect(footStepSFX1, footStepSFX1Volume);
+        audioSource.PlayOneShot(footStepSFX1, footStepSFX1Volume);
     }
 
     /// <summary>
@@ -101,16 +101,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void PlayFootStepSFX2()
     {
-        audioController.PlaySoundEffect(footStepSFX2, footStepSFX2Volume);
+        audioSource.PlayOneShot(footStepSFX2, footStepSFX2Volume);
     }
 
     public void PlayPlayerJumpSFX()
     {
-        audioController.PlaySoundEffect(playerJumpSFX, playerJumpSFXVolume);
+        audioSource.PlayOneShot(playerJumpSFX, playerJumpSFXVolume);
     }
 
     public void PlayPlayerLandSFX()
     {
-        audioController.PlaySoundEffect(playerLandSFX, playerLandSFXVolume);
+        audioSource.PlayOneShot(playerLandSFX, playerLandSFXVolume);
     }
 }

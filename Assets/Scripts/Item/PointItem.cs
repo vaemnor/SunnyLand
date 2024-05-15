@@ -1,9 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class PointItem : MonoBehaviour
 {
     protected GameController gameController;
-    protected AudioController audioController;
+
+    protected SpriteRenderer spriteRenderer;
+    protected Collider2D pointItemCollider;
+    protected AudioSource audioSource;
 
     [SerializeField] [Range(1, 100)] protected int pointsToAdd;
 
@@ -14,7 +18,10 @@ public class PointItem : MonoBehaviour
     protected virtual void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        audioController = GameObject.Find("AudioController").GetComponent<AudioController>();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        pointItemCollider = GetComponent<Collider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -24,14 +31,23 @@ public class PointItem : MonoBehaviour
             gameController.AddPoints(pointsToAdd);
 
             CreateItemFeedbackVFX();
-            audioController.PlaySoundEffect(pointItemFeedbackSFX, pointItemFeedbackSFXVolume);
-
-            Destroy(gameObject);
+            StartCoroutine(CreateItemFeedbackSFXAndDestroy());
         }
     }
 
     protected void CreateItemFeedbackVFX()
     {
         Instantiate(itemFeedbackVFX, transform.position, transform.rotation);
+    }
+
+    protected IEnumerator CreateItemFeedbackSFXAndDestroy()
+    {
+        spriteRenderer.enabled = false;
+        pointItemCollider.enabled = false;
+        audioSource.PlayOneShot(pointItemFeedbackSFX, pointItemFeedbackSFXVolume);
+
+        yield return new WaitForSeconds(pointItemFeedbackSFX.length);
+
+        Destroy(gameObject);
     }
 }

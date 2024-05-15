@@ -20,7 +20,7 @@ public class Chest : PointItem
             gameController.AddPoints(pointsToAdd);
 
             CreateItemFeedbackVFX();
-            audioController.PlaySoundEffect(pointItemFeedbackSFX, pointItemFeedbackSFXVolume);
+            audioSource.PlayOneShot(pointItemFeedbackSFX, pointItemFeedbackSFXVolume);
 
             chestCollider.enabled = false;
             animator.SetTrigger("isOpen");
