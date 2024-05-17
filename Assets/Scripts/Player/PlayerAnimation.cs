@@ -10,6 +10,8 @@ public class PlayerAnimation : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBody;
 
+    [SerializeField] private GameObject landSmokeVFX;
+
     [Tooltip("Material to switch to during the flash")]
     [SerializeField] private Material flashMaterial;
 
@@ -35,6 +37,43 @@ public class PlayerAnimation : MonoBehaviour
         originalMaterial = spriteRenderer.material;
     }
 
+    private void FixedUpdate()
+    {
+        if (playerMovement.CheckIfIsGrounded() && isFalling)
+        {
+            isFalling = false;
+
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", false);
+
+            if (!playerController.IsDying)
+            {
+                CreateLandSmokeVFX();
+                playerController.PlayPlayerLandSFX();
+            }
+        }
+        else if (!playerMovement.CheckIfIsGrounded())
+        {
+            if (rigidBody.velocity.y > 0f)
+            {
+                animator.SetBool("isJumping", true);
+                animator.SetBool("isFalling", false);
+            }
+            else if (rigidBody.velocity.y < 0f)
+            {
+                isFalling = true;
+
+                animator.SetBool("isFalling", true);
+                animator.SetBool("isJumping", false);
+            }
+        }
+    }
+
+    private void CreateLandSmokeVFX()
+    {
+        Instantiate(landSmokeVFX, transform.position, transform.rotation);
+    }
+
     public void PlayHurtAnimation()
     {
         StartCoroutine(Flash());
@@ -55,36 +94,5 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayDeathAnimation()
     {
         animator.SetBool("isDying", true);
-    }
-
-    private void FixedUpdate()
-    {
-        if (playerMovement.CheckIfIsGrounded() && isFalling)
-        {
-            isFalling = false;
-
-            animator.SetBool("isJumping", false);
-            animator.SetBool("isFalling", false);
-
-            if (!playerController.IsDying)
-            {
-                playerController.PlayPlayerLandSFX();
-            }
-        }
-        else if (!playerMovement.CheckIfIsGrounded())
-        {
-            if (rigidBody.velocity.y > 0f)
-            {
-                animator.SetBool("isJumping", true);
-                animator.SetBool("isFalling", false);
-            }
-            else if (rigidBody.velocity.y < 0f)
-            {
-                isFalling = true;
-
-                animator.SetBool("isFalling", true);
-                animator.SetBool("isJumping", false);
-            }
-        }
     }
 }

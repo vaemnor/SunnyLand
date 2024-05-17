@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 BoxCastSize;
     [SerializeField] private float BoxCastOffset;
 
+    [SerializeField] private GameObject jumpSmokeVFXRight;
+    [SerializeField] private GameObject jumpSmokeVFXLeft;
+
     private float currentMoveInput = 0f;
     private bool isFacingRight = true;
 
@@ -69,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
             if (context.performed && CheckIfIsGrounded())
             {
                 MakePlayerGoUp();
+                CreateJumpSmokeVFX();
             }
         }
     }
@@ -124,6 +128,18 @@ public class PlayerMovement : MonoBehaviour
 
         //Informs the physics engine in which direction and orientation the player is moving and at what movement speed
         rigidBody.velocity = new Vector2(directionX, rigidBody.velocity.y);
+    }
+
+    private void CreateJumpSmokeVFX()
+    {
+        if (!spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXRight, transform.position, transform.rotation);
+        }
+        else if (spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXLeft, transform.position, transform.rotation);
+        }
     }
 
     /// <summary>
