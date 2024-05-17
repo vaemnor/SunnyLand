@@ -9,7 +9,6 @@ public class Parallax : MonoBehaviour
     [SerializeField] private float parallaxFactor = 0f;
 
     private Vector3 startPosition = Vector3.zero;
-    private Vector3 distanceToMove = Vector3.zero;
 
     private void Awake()
     {
@@ -19,10 +18,12 @@ public class Parallax : MonoBehaviour
         startPosition = transform.position;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        distanceToMove = (mainCamera.transform.position - startPosition) * parallaxFactor;
-        Vector3 targetPosition = new(startPosition.x + distanceToMove.x, startPosition.y, startPosition.z);
+        Vector3 cameraPosition = pixelPerfectCamera.RoundToPixel(mainCamera.transform.position);
+        Vector3 distanceToMove = pixelPerfectCamera.RoundToPixel((cameraPosition - startPosition) * parallaxFactor);
+
+        Vector3 targetPosition = new (startPosition.x + distanceToMove.x, startPosition.y, startPosition.z);
 
         transform.position = pixelPerfectCamera.RoundToPixel(targetPosition);
     }
