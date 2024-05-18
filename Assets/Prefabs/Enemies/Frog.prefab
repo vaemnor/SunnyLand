@@ -202,10 +202,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 4
-  MaxDistance: 6
+  MinDistance: 10
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -296,7 +296,7 @@ MonoBehaviour:
   enemyDeathSFX: {fileID: 8300000, guid: 2c58b86dac9cf584f86c61b688ccca51, type: 3}
   enemyDeathSFXVolume: 1
   isMovingRight: 0
-  moveSpeed: 4
+  moveSpeed: 5
   jumpForce: 15
   enemyJumpSFX: {fileID: 8300000, guid: e2022322ac59a6c4795e1bcc768e68cf, type: 3}
   enemyJumpSFXVolume: 0.5

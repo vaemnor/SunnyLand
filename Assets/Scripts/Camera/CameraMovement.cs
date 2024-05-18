@@ -34,22 +34,28 @@ public class CameraMovement : MonoBehaviour
     [Tooltip("Upward border of camera movement")]
     [SerializeField] private float maxY = 0f;
 
-    /*
     /// <summary>
-    /// Placeholder
+    /// The amount by which the camera is vertically offset from the player.
     /// </summary>
-    [Tooltip("Placeholder")]
-    [SerializeField] private float smoothTime = 0;
-    */
+    [Tooltip("The amount by which the camera is vertically offset from the player.")]
+    [SerializeField] private float offsetY = 0f;
+
+    /// <summary>
+    /// The amount of time it takes to interpolate between the position of the camera and the position of the player.
+    /// </summary>
+    [Tooltip("The amount of time it takes to interpolate between the position of the camera and the position of the player.")]
+    [SerializeField] private float smoothTime = 0f;
 
     private Vector3 newPosition = Vector3.zero;
-    //private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
+
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, transform.position.z);
     }
 
     /// <summary>
@@ -65,7 +71,9 @@ public class CameraMovement : MonoBehaviour
             MoveCameraY();
 
             //Vector3 targetPosition = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
-            transform.position = pixelPerfectCamera.RoundToPixel(newPosition); // replace newPosition with targetPosition for smooth Camera
+            //transform.position = targetPosition;
+
+            transform.position = pixelPerfectCamera.RoundToPixel(newPosition);
         }
     }
 
@@ -87,9 +95,9 @@ public class CameraMovement : MonoBehaviour
 
     private void MoveCameraY()
     {
-        if (playerTransform.position.y >= minY && playerTransform.position.y <= maxY)
+        if (playerTransform.position.y + offsetY >= minY && playerTransform.position.y + offsetY <= maxY)
         {
-            newPosition.y = playerTransform.position.y;
+            newPosition.y = playerTransform.position.y + offsetY;
         }
         else if (playerTransform.position.y < minY)
         {
