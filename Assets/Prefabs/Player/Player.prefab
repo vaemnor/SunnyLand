@@ -399,10 +399,10 @@ MonoBehaviour:
   footStepSFX1Volume: 1
   footStepSFX2: {fileID: 8300000, guid: 5a706fc2fd0dd73418cca49e50917791, type: 3}
   footStepSFX2Volume: 1
-  playerJumpSFX: {fileID: 8300000, guid: 473242e46132ac64887f84ec1a9be2e2, type: 3}
-  playerJumpSFXVolume: 1
-  playerLandSFX: {fileID: 8300000, guid: 2c4b803ff9d72884ab2d8a29279e9b28, type: 3}
-  playerLandSFXVolume: 1
+  jumpSFX: {fileID: 8300000, guid: 473242e46132ac64887f84ec1a9be2e2, type: 3}
+  jumpSFXVolume: 1
+  landSFX: {fileID: 8300000, guid: 2c4b803ff9d72884ab2d8a29279e9b28, type: 3}
+  landSFXVolume: 1
   playerHurtSFX: {fileID: 8300000, guid: 4ece74626dac44a448fec372071f277e, type: 3}
   playerHurtSFXVolume: 1
   playerDieSFX: {fileID: 8300000, guid: 1e4e3406dfc0be745a6246228bd3722d, type: 3}

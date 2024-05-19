@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 639551360084961811}
   - component: {fileID: 3471355158044459501}
   - component: {fileID: 5023950402120935699}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CrateBig
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

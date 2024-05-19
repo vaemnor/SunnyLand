@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class FlyingEnemy : Enemy
 {
-    [SerializeField] private bool isMovingUp;
+    [SerializeField] private bool isMovingUp = false;
 
-    [SerializeField] private Vector2 minPosition;
-    [SerializeField] private Vector2 maxPosition;
+    [SerializeField] private Vector2 minPosition = Vector3.zero;
+    [SerializeField] private Vector2 maxPosition = Vector3.zero;
 
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 0f;
 
-    private Vector2 upwardVelocity;
-    private Vector2 downwardVelocity;
+    private Vector2 upwardVelocity = Vector2.zero;
+    private Vector2 downwardVelocity = Vector2.zero;
 
     protected override void Awake()
     {

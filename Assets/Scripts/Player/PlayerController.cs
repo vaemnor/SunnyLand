@@ -16,11 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip footStepSFX2;
     [SerializeField] [Range(0, 1)] private float footStepSFX2Volume = 0f;
 
-    [SerializeField] private AudioClip playerJumpSFX;
-    [SerializeField] [Range(0, 1)] private float playerJumpSFXVolume = 0f;
+    [SerializeField] private AudioClip jumpSFX;
+    [SerializeField] [Range(0, 1)] private float jumpSFXVolume = 0f;
 
-    [SerializeField] private AudioClip playerLandSFX;
-    [SerializeField] [Range(0, 1)] private float playerLandSFXVolume = 0f;
+    [SerializeField] private AudioClip landSFX;
+    [SerializeField] [Range(0, 1)] private float landSFXVolume = 0f;
 
     [SerializeField] private AudioClip playerHurtSFX;
     [SerializeField] [Range(0, 1)] private float playerHurtSFXVolume = 0f;
@@ -106,11 +106,11 @@ public class PlayerController : MonoBehaviour
 
     public void PlayPlayerJumpSFX()
     {
-        audioSource.PlayOneShot(playerJumpSFX, playerJumpSFXVolume);
+        audioSource.PlayOneShot(jumpSFX, jumpSFXVolume);
     }
 
     public void PlayPlayerLandSFX()
     {
-        audioSource.PlayOneShot(playerLandSFX, playerLandSFXVolume);
+        audioSource.PlayOneShot(landSFX, landSFXVolume);
     }
 }

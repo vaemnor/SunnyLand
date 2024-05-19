@@ -5,19 +5,25 @@ public class JumpingEnemy : Enemy
 {
     private Animator animator;
 
-    [SerializeField] private bool isMovingRight;
+    [SerializeField] private bool isMovingRight = false;
+    [SerializeField] private float idleTime = 0f;
 
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float moveSpeed = 0f;
+    [SerializeField] private float jumpForce = 0f;
 
-    [SerializeField] private AudioClip enemyJumpSFX;
-    [SerializeField] [Range(0, 1)] private float enemyJumpSFXVolume = 0f;
+    [SerializeField] private GameObject jumpSmokeVFXRight;
+    [SerializeField] private GameObject jumpSmokeVFXLeft;
+    [SerializeField] private GameObject landSmokeVFX;
+    [SerializeField] private Vector3 jumpAndLandSmokeVFXOffset = Vector3.zero;
 
-    [SerializeField] private AudioClip enemyLandSFX;
-    [SerializeField] [Range(0, 1)] private float enemyLandSFXVolume = 0f;
+    [SerializeField] private AudioClip jumpSFX;
+    [SerializeField] [Range(0, 1)] private float jumpSFXVolume = 0f;
 
-    private float rightDirection;
-    private float leftDirection;
+    [SerializeField] private AudioClip landSFX;
+    [SerializeField] [Range(0, 1)] private float landSFXVolume = 0f;
+
+    private float rightDirection = 0f;
+    private float leftDirection = 0f;
 
     private bool isIdle = false;
     private bool isGrounded = true;
@@ -65,7 +71,7 @@ public class JumpingEnemy : Enemy
         isIdle = true;
         rigidBody.velocity = Vector2.zero;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(idleTime);
 
         if (isMovingRight)
         {
@@ -92,7 +98,8 @@ public class JumpingEnemy : Enemy
                 StartCoroutine(Idle());
             }
 
-            audioSource.PlayOneShot(enemyLandSFX, enemyLandSFXVolume);
+            CreateLandSmokeVFX();
+            audioSource.PlayOneShot(landSFX, landSFXVolume);
         }
     }
 
@@ -114,7 +121,9 @@ public class JumpingEnemy : Enemy
         }
 
         isGrounded = false;
-        audioSource.PlayOneShot(enemyJumpSFX, enemyJumpSFXVolume);
+
+        CreateJumpSmokeVFX();
+        audioSource.PlayOneShot(jumpSFX, jumpSFXVolume);
     }
 
     private void StopMove()
@@ -139,5 +148,22 @@ public class JumpingEnemy : Enemy
     {
         animator.SetBool("isFalling", true);
         animator.SetBool("isJumping", false);
+    }
+
+    private void CreateJumpSmokeVFX()
+    {
+        if (spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXRight, transform.position + jumpAndLandSmokeVFXOffset, transform.rotation);
+        }
+        else if (!spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXLeft, transform.position + jumpAndLandSmokeVFXOffset, transform.rotation);
+        }
+    }
+
+    private void CreateLandSmokeVFX()
+    {
+        Instantiate(landSmokeVFX, transform.position + jumpAndLandSmokeVFXOffset, transform.rotation);
     }
 }
