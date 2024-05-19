@@ -23,7 +23,7 @@ public class Parallax : MonoBehaviour
         Vector3 cameraPosition = pixelPerfectCamera.RoundToPixel(mainCamera.transform.position);
         Vector3 distanceToMove = pixelPerfectCamera.RoundToPixel((cameraPosition - startPosition) * parallaxFactor);
 
-        Vector3 targetPosition = new (startPosition.x + distanceToMove.x, startPosition.y, startPosition.z);
+        Vector3 targetPosition = new(startPosition.x + distanceToMove.x, startPosition.y, startPosition.z);
 
         transform.position = pixelPerfectCamera.RoundToPixel(targetPosition);
     }

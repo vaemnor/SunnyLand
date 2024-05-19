@@ -1,9 +1,16 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
     private GameController gameController;
+
+    /// <summary>
+    /// The amount of time (in seconds) to wait for the GameOverScreen scene to load.
+    /// </summary>
+    [Tooltip("The amount of time (in seconds) to wait for the GameOverScreen scene to load.")]
+    [SerializeField] private float loadGameOverScreenWaitTime = 0f;
 
     private void Awake()
     {
@@ -37,16 +44,10 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public IEnumerator LoadGameOverScreen()
     {
-        if (collision.gameObject.CompareTag("Player") == true)
-        {
-            LoadGameOverScreen();
-        }
-    }
+        yield return new WaitForSeconds(loadGameOverScreenWaitTime);
 
-    public void LoadGameOverScreen()
-    {
         SceneManager.LoadScene("GameOverScreen");
     }
 

@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    private SceneController sceneController;
     private PlayerController playerController;
 
-    [SerializeField] private int level;
+    [SerializeField] private int level = 0;
 
     [SerializeField] private TMP_Text levelDisplay;
     [SerializeField] private TMP_Text livesDisplay;
@@ -13,11 +14,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
+        sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         UpdateLevelDisplay();
@@ -59,6 +56,7 @@ public class GameController : MonoBehaviour
             else
             {
                 playerController.KillPlayer();
+                StartCoroutine(sceneController.LoadGameOverScreen());
             }
         }
     }

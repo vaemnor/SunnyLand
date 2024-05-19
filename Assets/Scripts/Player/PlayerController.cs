@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     public void KillPlayer()
     {
         IsDying = true;
-        playerCollider.isTrigger = true;
+        playerCollider.enabled = false;
 
         playerMovement.StopMove();
         playerMovement.MakePlayerGoUp();

@@ -6,6 +6,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 /// </summary>
 public class CameraMovement : MonoBehaviour
 {
+    private PlayerController playerController;
+
     private Transform playerTransform;
 
     private PixelPerfectCamera pixelPerfectCamera;
@@ -41,9 +43,9 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float offsetY = 0f;
 
     /// <summary>
-    /// The amount of time it takes to interpolate between the position of the camera and the position of the player.
+    /// The amount of time (in seconds) it takes to interpolate between the position of the camera and the position of the player.
     /// </summary>
-    [Tooltip("The amount of time it takes to interpolate between the position of the camera and the position of the player.")]
+    [Tooltip("The amount of time (in seconds) it takes to interpolate between the position of the camera and the position of the player.")]
     [SerializeField] private float smoothTime = 0f;
 
     private Vector3 newPosition = Vector3.zero;
@@ -51,6 +53,8 @@ public class CameraMovement : MonoBehaviour
 
     private void Awake()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         pixelPerfectCamera = GetComponent<PixelPerfectCamera>();
@@ -63,7 +67,7 @@ public class CameraMovement : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        if (playerTransform != null)
+        if (!playerController.IsDying)
         {
             newPosition = transform.position;
 
