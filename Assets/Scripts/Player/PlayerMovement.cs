@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject jumpSmokeVFXLeft;
 
     private float currentMoveInput = 0f;
-    private bool isFacingRight = true;
 
     private void Awake()
     {
@@ -53,14 +52,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void TurnIfNeeded()
     {
-        if (currentMoveInput > 0f && !isFacingRight)
+        if (currentMoveInput > 0f)
         {
-            isFacingRight = true;
             spriteRenderer.flipX = false;
         }
-        else if (currentMoveInput < 0f && isFacingRight)
+        else if (currentMoveInput < 0f)
         {
-            isFacingRight = false;
             spriteRenderer.flipX = true;
         }
     }
