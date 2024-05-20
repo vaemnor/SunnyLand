@@ -4434,6 +4434,10 @@ PrefabInstance:
       value: Frog1
       objectReference: {fileID: 0}
     - target: {fileID: 4761149066878463295, guid: fc439609b0f76694eb16bbab84b0c05c, type: 3}
+      propertyPath: idleTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761149066878463295, guid: fc439609b0f76694eb16bbab84b0c05c, type: 3}
       propertyPath: jumpForce
       value: 14
       objectReference: {fileID: 0}
