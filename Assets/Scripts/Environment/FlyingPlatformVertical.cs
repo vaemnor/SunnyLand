@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class FlyingEnemy : Enemy
+public class FlyingPlatformVertical : MonoBehaviour
 {
+    private Rigidbody2D rigidBody;
+
     [SerializeField] private bool isMovingUp = false;
 
     [SerializeField] private Vector2 minPosition = Vector3.zero;
@@ -12,9 +14,9 @@ public class FlyingEnemy : Enemy
     private Vector2 downwardVelocity = Vector2.zero;
     private Vector2 upwardVelocity = Vector2.zero;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        rigidBody = GetComponent<Rigidbody2D>();
 
         Vector2 downwardDirection = minPosition - maxPosition;
         downwardDirection.Normalize();
@@ -28,26 +30,24 @@ public class FlyingEnemy : Enemy
 
     private void FixedUpdate()
     {
-        if (!isDying)
+        if (rigidBody.position.y <= minPosition.y && !isMovingUp)
         {
-            if (rigidBody.position.y <= minPosition.y && !isMovingUp)
-            {
-                MoveUp();
-            }
-            else if (rigidBody.position.y >= maxPosition.y && isMovingUp)
+            MoveUp();
+        }
+        else if (rigidBody.position.y >= maxPosition.y && isMovingUp)
+        {
+            MoveDown();
+        }
+        else
+        {
+            if (!isMovingUp)
             {
                 MoveDown();
+                
             }
-            else
+            else if (isMovingUp)
             {
-                if (!isMovingUp)
-                {
-                    MoveDown();
-                }
-                else
-                {
-                    MoveUp();
-                }
+                MoveUp();
             }
         }
     }
