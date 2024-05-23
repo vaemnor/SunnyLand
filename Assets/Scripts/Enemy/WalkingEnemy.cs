@@ -77,7 +77,7 @@ public class WalkingEnemy : Enemy
     }
 
     /// <summary>
-    /// This method is called by an animation event in the player_run animation
+    /// This method is called by an animation event in the opossum animation.
     /// </summary>
     private void PlayFootStepSFX1()
     {
@@ -85,7 +85,7 @@ public class WalkingEnemy : Enemy
     }
 
     /// <summary>
-    /// This method is called by an animation event in the player_run animation
+    /// This method is called by an animation event in the opossum animation.
     /// </summary>
     private void PlayFootStepSFX2()
     {

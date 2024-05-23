@@ -4,29 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private PlayerAnimation playerAnimation;
+    private PlayerAudio playerAudio;
 
     private Collider2D playerCollider;
-    private AudioSource audioSource;
 
     private Vector2 spawnPosition;
-
-    [SerializeField] private AudioClip footStepSFX1;
-    [SerializeField] [Range(0, 1)] private float footStepSFX1Volume = 0f;
-
-    [SerializeField] private AudioClip footStepSFX2;
-    [SerializeField] [Range(0, 1)] private float footStepSFX2Volume = 0f;
-
-    [SerializeField] private AudioClip jumpSFX;
-    [SerializeField] [Range(0, 1)] private float jumpSFXVolume = 0f;
-
-    [SerializeField] private AudioClip landSFX;
-    [SerializeField] [Range(0, 1)] private float landSFXVolume = 0f;
-
-    [SerializeField] private AudioClip playerHurtSFX;
-    [SerializeField] [Range(0, 1)] private float playerHurtSFXVolume = 0f;
-
-    [SerializeField] private AudioClip playerDieSFX;
-    [SerializeField] [Range(0, 1)] private float playerDieSFXVolume = 0f;
 
     private bool canMove = true;
     private bool isHurt = false;
@@ -54,9 +36,9 @@ public class PlayerController : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerAudio = GetComponent<PlayerAudio>();
 
         playerCollider = GetComponent<Collider2D>();
-        audioSource = GetComponent<AudioSource>();
 
         spawnPosition = transform.position;
     }
@@ -66,14 +48,14 @@ public class PlayerController : MonoBehaviour
         transform.position = spawnPosition;
     }
 
-    public void HurtPlayer(float reboundDirection)
+    public void HurtPlayer(float _recoilDirection)
     {
         IsHurt = true;
 
-        playerMovement.Rebound(reboundDirection);
-        playerAnimation.PlayHurtAnimation();
+        StartCoroutine(playerMovement.Recoil(_recoilDirection));
 
-        audioSource.PlayOneShot(playerHurtSFX, playerHurtSFXVolume);
+        playerAnimation.PlayHurtAnimation();
+        playerAudio.PlayPlayerHurtSFX();
     }
 
     public void KillPlayer()
@@ -81,36 +63,10 @@ public class PlayerController : MonoBehaviour
         IsDying = true;
         playerCollider.enabled = false;
 
-        playerMovement.StopMove();
-        playerMovement.MakePlayerGoUp();
+        playerMovement.DisableMovement();
+        playerMovement.AscendPlayer();
+
         playerAnimation.PlayDeathAnimation();
-
-        audioSource.PlayOneShot(playerDieSFX, playerDieSFXVolume);
-    }
-
-    /// <summary>
-    /// This method is called by an animation event in the player_run animation
-    /// </summary>
-    private void PlayFootStepSFX1()
-    {
-        audioSource.PlayOneShot(footStepSFX1, footStepSFX1Volume);
-    }
-
-    /// <summary>
-    /// This method is called by an animation event in the player_run animation
-    /// </summary>
-    private void PlayFootStepSFX2()
-    {
-        audioSource.PlayOneShot(footStepSFX2, footStepSFX2Volume);
-    }
-
-    public void PlayPlayerJumpSFX()
-    {
-        audioSource.PlayOneShot(jumpSFX, jumpSFXVolume);
-    }
-
-    public void PlayPlayerLandSFX()
-    {
-        audioSource.PlayOneShot(landSFX, landSFXVolume);
+        playerAudio.PlayPlayerDieSFX();
     }
 }

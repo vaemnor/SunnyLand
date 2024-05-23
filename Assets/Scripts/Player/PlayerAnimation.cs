@@ -5,17 +5,20 @@ public class PlayerAnimation : MonoBehaviour
 {
     private PlayerController playerController;
     private PlayerMovement playerMovement;
+    private PlayerAudio playerAudio;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rigidBody;
 
+    [SerializeField] private GameObject jumpSmokeVFXLeft;
+    [SerializeField] private GameObject jumpSmokeVFXRight;
     [SerializeField] private GameObject landSmokeVFX;
 
-    [Tooltip("Material to switch to during the flash")]
+    [Tooltip("The material to switch to during the flash.")]
     [SerializeField] private Material flashMaterial;
 
-    [Tooltip("Duration of the flash")]
+    [Tooltip("The duration of the flash.")]
     [SerializeField] private float flashDuration;
 
     /// <summary>
@@ -29,6 +32,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerAudio = GetComponent<PlayerAudio>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -49,7 +53,7 @@ public class PlayerAnimation : MonoBehaviour
             if (!playerController.IsDying)
             {
                 CreateLandSmokeVFX();
-                playerController.PlayPlayerLandSFX();
+                playerAudio.PlayPlayerLandSFX();
             }
         }
         else if (!playerMovement.CheckIfIsGrounded())
@@ -66,6 +70,18 @@ public class PlayerAnimation : MonoBehaviour
                 animator.SetBool("isFalling", true);
                 animator.SetBool("isJumping", false);
             }
+        }
+    }
+
+    public void CreateJumpSmokeVFX()
+    {
+        if (spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXLeft, transform.position, transform.rotation);
+        }
+        else if (!spriteRenderer.flipX)
+        {
+            Instantiate(jumpSmokeVFXRight, transform.position, transform.rotation);
         }
     }
 
@@ -94,5 +110,10 @@ public class PlayerAnimation : MonoBehaviour
     public void PlayDeathAnimation()
     {
         animator.SetBool("isDying", true);
+    }
+
+    public void SetMoveSpeedInAnimator(float _directionX)
+    {
+        animator.SetFloat("moveSpeed", Mathf.Abs(_directionX));
     }
 }

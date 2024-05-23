@@ -44,14 +44,14 @@ public class GameController : MonoBehaviour
         UpdateLivesDisplay();
     }
 
-    public void HurtOrKillPlayer(float reboundDirection)
+    public void HurtOrKillPlayer(float recoilDirection)
     {
         if (!(playerController.IsHurt || playerController.IsDying))
         {
             if (WorldState.Lives > 1)
             {
                 RemoveLife();
-                playerController.HurtPlayer(reboundDirection);
+                playerController.HurtPlayer(recoilDirection);
             }
             else
             {

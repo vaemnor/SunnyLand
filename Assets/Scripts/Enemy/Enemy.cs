@@ -11,10 +11,10 @@ public class Enemy : MonoBehaviour
     protected Collider2D enemyCollider;
     protected AudioSource audioSource;
 
-    [Tooltip("Material to switch to during the flash.")]
+    [Tooltip("The material to switch to during the flash.")]
     [SerializeField] protected Material flashMaterial;
 
-    [Tooltip("Duration of the flash.")]
+    [Tooltip("The duration of the flash.")]
     [SerializeField] protected float flashDuration;
 
     [SerializeField] protected GameObject enemyDeathVFX;
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         {
             if (collision.GetContact(0).normal.y == -1f)
             {
-                playerMovement.MakePlayerGoUp();
+                playerMovement.AscendPlayer();
 
                 isDying = true;
 

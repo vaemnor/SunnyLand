@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7433888051482261971}
   - component: {fileID: -1219979943122967779}
   - component: {fileID: 5998751704717940929}
+  - component: {fileID: 1384161142165014456}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -395,18 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fe7811807b6a844a2bb08d5a747d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footStepSFX1: {fileID: 8300000, guid: f35eb1d4c05ae8746b0d57ab69995ee4, type: 3}
-  footStepSFX1Volume: 1
-  footStepSFX2: {fileID: 8300000, guid: 5a706fc2fd0dd73418cca49e50917791, type: 3}
-  footStepSFX2Volume: 1
-  jumpSFX: {fileID: 8300000, guid: 473242e46132ac64887f84ec1a9be2e2, type: 3}
-  jumpSFXVolume: 1
-  landSFX: {fileID: 8300000, guid: 2c4b803ff9d72884ab2d8a29279e9b28, type: 3}
-  landSFXVolume: 1
-  playerHurtSFX: {fileID: 8300000, guid: 4ece74626dac44a448fec372071f277e, type: 3}
-  playerHurtSFXVolume: 1
-  playerDieSFX: {fileID: 8300000, guid: 1e4e3406dfc0be745a6246228bd3722d, type: 3}
-  playerDieSFXVolume: 1
 --- !u!114 &-1219979943122967779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,11 +410,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6.6666665
   jumpForce: 16
-  invulnerabilityDuration: 0.2
+  recoilForceX: 1.5
+  recoilForceY: 0.5
   BoxCastSize: {x: 0.75, y: 0.5625}
   BoxCastOffset: 0.78125
-  jumpSmokeVFXRight: {fileID: 6084817700290979524, guid: 47f418b0dcffa3941ba0c9e6aa521abf, type: 3}
-  jumpSmokeVFXLeft: {fileID: 6084817700290979524, guid: ce98276505939dc4b97082a0453b9495, type: 3}
 --- !u!114 &5998751704717940929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +426,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4458be44df29ec469ccdc5ef89d6c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSmokeVFXLeft: {fileID: 6084817700290979524, guid: ce98276505939dc4b97082a0453b9495, type: 3}
+  jumpSmokeVFXRight: {fileID: 6084817700290979524, guid: 47f418b0dcffa3941ba0c9e6aa521abf, type: 3}
   landSmokeVFX: {fileID: 8535716681330619273, guid: 2a76480f881b14244907ea8ad3cdb4b4, type: 3}
   flashMaterial: {fileID: 2100000, guid: d8de362316f6d87429d63c7e0fdae14c, type: 2}
   flashDuration: 0.2
+--- !u!114 &1384161142165014456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656400038065325408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c2ea5c1e98ea544a45fe77671e663e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footStepSFX1: {fileID: 8300000, guid: f35eb1d4c05ae8746b0d57ab69995ee4, type: 3}
+  footStepSFX1Volume: 1
+  footStepSFX2: {fileID: 8300000, guid: 5a706fc2fd0dd73418cca49e50917791, type: 3}
+  footStepSFX2Volume: 1
+  jumpSFX: {fileID: 8300000, guid: 473242e46132ac64887f84ec1a9be2e2, type: 3}
+  jumpSFXVolume: 1
+  landSFX: {fileID: 8300000, guid: 2c4b803ff9d72884ab2d8a29279e9b28, type: 3}
+  landSFXVolume: 1
+  playerHurtSFX: {fileID: 8300000, guid: 4ece74626dac44a448fec372071f277e, type: 3}
+  playerHurtSFXVolume: 1
+  playerDieSFX: {fileID: 8300000, guid: 1e4e3406dfc0be745a6246228bd3722d, type: 3}
+  playerDieSFXVolume: 1
