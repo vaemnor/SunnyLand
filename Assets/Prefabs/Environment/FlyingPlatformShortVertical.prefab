@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -8875961372294969813}
   - component: {fileID: 1403488564299906289}
   - component: {fileID: 7350037842292900233}
-  - component: {fileID: -158172043148749545}
+  - component: {fileID: 2975446164072469216}
   m_Layer: 3
-  m_Name: FlyingPlatformShortHorizontal
+  m_Name: FlyingPlatformShortVertical
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +179,7 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!114 &-158172043148749545
+--- !u!114 &2975446164072469216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,10 +188,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8067064512620011884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e20c8c8aaa5b1b846bb7b32b9cb55dfb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f1bdef1596bf6f4fa0f8b3758c39b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMovingRight: 0
+  isMovingUp: 0
   minPosition: {x: 0, y: 0}
   maxPosition: {x: 0, y: 0}
   moveSpeed: 3

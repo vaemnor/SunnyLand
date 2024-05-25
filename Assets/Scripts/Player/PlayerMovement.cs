@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Calculates the horizontal movement on the X-axis
-        float directionX = currentMoveInput * moveSpeed;
+        float directionX = (currentMoveInput * moveSpeed) * Time.fixedDeltaTime;
 
         // Informs the animator what movement speed the player currently has
         playerAnimation.SetMoveSpeedInAnimator(directionX);

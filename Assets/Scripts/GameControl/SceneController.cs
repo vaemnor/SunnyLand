@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     private GameController gameController;
+    private PlayerController playerController;
+
+    private Animator sceneTransition;
 
     /// <summary>
     /// The amount of time (in seconds) to wait for the GameOverScreen scene to load.
@@ -15,16 +18,19 @@ public class SceneController : MonoBehaviour
     private void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        sceneTransition = GameObject.Find("SceneTransition").GetComponent<Animator>();
     }
 
     public void LoadTitleScreen()
     {
-        SceneManager.LoadScene("TitleScreen");
+        StartCoroutine(StartSceneTransitionAndLoadScene("TitleScreen"));
     }
 
     public void LoadFirstLevel()
     {
-        SceneManager.LoadScene("Level1");
+        StartCoroutine(StartSceneTransitionAndLoadScene("Level1"));
     }
 
     public void LoadNextLevel()
@@ -32,15 +38,15 @@ public class SceneController : MonoBehaviour
         LoadNextScene();
     }
 
-    public void LoadNextScene()
+    private void LoadNextScene()
     {
         if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            StartCoroutine(StartSceneTransitionAndLoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         }
         else
         {
-            SceneManager.LoadScene(0);
+            StartCoroutine(StartSceneTransitionAndLoadScene(0));
         }
     }
 
@@ -48,7 +54,7 @@ public class SceneController : MonoBehaviour
     {
         yield return new WaitForSeconds(loadGameOverScreenWaitTime);
 
-        SceneManager.LoadScene("GameOverScreen");
+        StartCoroutine(StartSceneTransitionAndLoadScene("GameOverScreen"));
     }
 
     public void Retry()
@@ -60,5 +66,23 @@ public class SceneController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private IEnumerator StartSceneTransitionAndLoadScene(int sceneBuildIndex)
+    {
+        sceneTransition.SetTrigger("startSceneTransition");
+
+        yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
+
+        SceneManager.LoadScene(sceneBuildIndex);
+    }
+
+    private IEnumerator StartSceneTransitionAndLoadScene(string sceneName)
+    {
+        sceneTransition.SetTrigger("startSceneTransition");
+
+        yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
+
+        SceneManager.LoadScene(sceneName);
     }
 }

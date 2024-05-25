@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class FlyingPlatformVertical : MonoBehaviour
 {
+    private PixelPerfectCamera pixelPerfectCamera;
+
     private Rigidbody2D rigidBody;
 
     [SerializeField] private bool isMovingUp = false;
@@ -16,6 +19,8 @@ public class FlyingPlatformVertical : MonoBehaviour
 
     private void Awake()
     {
+        pixelPerfectCamera = GameObject.Find("MainCamera").GetComponent<PixelPerfectCamera>();
+
         rigidBody = GetComponent<Rigidbody2D>();
 
         Vector2 downwardDirection = minPosition - maxPosition;
@@ -55,12 +60,12 @@ public class FlyingPlatformVertical : MonoBehaviour
     private void MoveDown()
     {
         isMovingUp = false;
-        rigidBody.MovePosition(rigidBody.position + downwardVelocity * Time.fixedDeltaTime);
+        rigidBody.MovePosition(pixelPerfectCamera.RoundToPixel(rigidBody.position + downwardVelocity * Time.fixedDeltaTime));
     }
 
     private void MoveUp()
     {
         isMovingUp = true;
-        rigidBody.MovePosition(rigidBody.position + upwardVelocity * Time.fixedDeltaTime);
+        rigidBody.MovePosition(pixelPerfectCamera.RoundToPixel(rigidBody.position + upwardVelocity * Time.fixedDeltaTime));
     }
 }

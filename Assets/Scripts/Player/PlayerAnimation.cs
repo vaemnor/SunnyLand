@@ -43,17 +43,20 @@ public class PlayerAnimation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerMovement.CheckIfIsGrounded() && isFalling)
+        if (playerMovement.CheckIfIsGrounded())
         {
-            isFalling = false;
-
             animator.SetBool("isJumping", false);
             animator.SetBool("isFalling", false);
 
-            if (!playerController.IsDying)
+            if (isFalling)
             {
-                CreateLandSmokeVFX();
-                playerAudio.PlayPlayerLandSFX();
+                isFalling = false;
+
+                if (!playerController.IsDying)
+                {
+                    CreateLandSmokeVFX();
+                    playerAudio.PlayPlayerLandSFX();
+                }
             }
         }
         else if (!playerMovement.CheckIfIsGrounded())

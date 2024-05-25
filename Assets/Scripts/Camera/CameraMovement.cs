@@ -49,7 +49,6 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float smoothTime = 0f;
 
     private Vector3 newPosition = Vector3.zero;
-    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
@@ -73,9 +72,6 @@ public class CameraMovement : MonoBehaviour
 
             MoveCameraX();
             MoveCameraY();
-
-            //Vector3 targetPosition = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
-            //transform.position = targetPosition;
 
             transform.position = pixelPerfectCamera.RoundToPixel(newPosition);
         }
