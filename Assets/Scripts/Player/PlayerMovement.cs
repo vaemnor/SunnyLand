@@ -46,12 +46,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void DisableMovement()
-    {
-        currentMoveInput = 0f;
-        playerController.CanMove = false;
-    }
-
     private void TurnIfNeeded()
     {
         if (currentMoveInput > 0f)
@@ -70,40 +64,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (context.performed && CheckIfIsGrounded())
             {
-                AscendPlayer();
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
                 playerAnimation.CreateJumpSmokeVFX();
+                playerAudio.PlayPlayerJumpSFX();
             }
         }
-    }
-
-    public void AscendPlayer()
-    {
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-
-        if (!playerController.IsDying)
-        {
-            playerAudio.PlayPlayerJumpSFX();
-        }
-    }
-
-    public IEnumerator Recoil(float _recoilDirection)
-    {
-        playerController.CanMove = false;
-        currentMoveInput = _recoilDirection;
-        moveSpeed *= recoilForceX;
-
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce * recoilForceY);
-
-        while (rigidBody.velocity.y > 0f)
-        {
-            yield return new WaitForSeconds(0f);
-        }
-
-        playerController.IsHurt = false;
-
-        currentMoveInput = 0f;
-        moveSpeed /= recoilForceX;
-        playerController.CanMove = true;
     }
 
     public bool CheckIfIsGrounded()
@@ -116,6 +81,44 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void JumpAfterKillingEnemy()
+    {
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+        playerAudio.PlayPlayerJumpSFX();
+    }
+
+    public IEnumerator Recoil(float _recoilDirection)
+    {
+        currentMoveInput = _recoilDirection;
+        moveSpeed *= recoilForceX;
+
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce * recoilForceY);
+
+        while (rigidBody.velocity.y > 0f)
+        {
+            yield return new WaitForSeconds(0f);
+        }
+
+        currentMoveInput = 0f;
+        moveSpeed /= recoilForceX;
+
+        playerController.CanMove = true;
+        playerController.CanBeHit = true;
+    }
+
+    public void JumpAfterDying()
+    {
+        currentMoveInput = 0f;
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+    }
+
+    public IEnumerator StopMovementAfterDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        currentMoveInput = 0f;
     }
 
     private void FixedUpdate()

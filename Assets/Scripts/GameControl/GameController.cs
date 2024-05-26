@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
 
     public void HurtOrKillPlayer(float recoilDirection)
     {
-        if (!(playerController.IsHurt || playerController.IsDying))
+        if (playerController.CanBeHit)
         {
             if (WorldState.Lives > 1)
             {

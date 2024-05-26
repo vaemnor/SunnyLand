@@ -42,12 +42,6 @@ public class CameraMovement : MonoBehaviour
     [Tooltip("The amount by which the camera is vertically offset from the player.")]
     [SerializeField] private float offsetY = 0f;
 
-    /// <summary>
-    /// The amount of time (in seconds) it takes to interpolate between the position of the camera and the position of the player.
-    /// </summary>
-    [Tooltip("The amount of time (in seconds) it takes to interpolate between the position of the camera and the position of the player.")]
-    [SerializeField] private float smoothTime = 0f;
-
     private Vector3 newPosition = Vector3.zero;
 
     private void Awake()

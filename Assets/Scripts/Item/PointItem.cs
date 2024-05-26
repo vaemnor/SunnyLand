@@ -4,6 +4,7 @@ using UnityEngine;
 public class PointItem : MonoBehaviour
 {
     protected GameController gameController;
+    protected PlayerController playerController;
 
     protected SpriteRenderer spriteRenderer;
     protected Collider2D pointItemCollider;
@@ -18,6 +19,7 @@ public class PointItem : MonoBehaviour
     protected virtual void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         pointItemCollider = GetComponent<Collider2D>();
@@ -26,7 +28,7 @@ public class PointItem : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") == true)
+        if (collision.gameObject.CompareTag("Player") == true && playerController.CanCollectItems)
         {
             gameController.AddPoints(pointsToAdd);
 

@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         {
             if (collision.GetContact(0).normal.y == -1f)
             {
-                playerMovement.AscendPlayer();
+                playerMovement.JumpAfterKillingEnemy();
 
                 isDying = true;
 

@@ -15,7 +15,7 @@ public class Chest : PointItem
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") == true)
+        if (collision.gameObject.CompareTag("Player") == true && playerController.CanCollectItems)
         {
             gameController.AddPoints(pointsToAdd);
 

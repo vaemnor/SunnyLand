@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 spawnPosition;
 
     private bool canMove = true;
-    private bool isHurt = false;
+    private bool canCollectItems = true;
+    private bool canBeHit = true;
     private bool isDying = false;
 
     public bool CanMove
@@ -20,10 +21,16 @@ public class PlayerController : MonoBehaviour
         set { canMove = value; }
     }
 
-    public bool IsHurt
+    public bool CanCollectItems
     {
-        get { return isHurt; }
-        set { isHurt = value; }
+        get { return canCollectItems; }
+        set { canCollectItems = value; }
+    }
+
+    public bool CanBeHit
+    {
+        get { return canBeHit; }
+        set { canBeHit = value; }
     }
 
     public bool IsDying
@@ -50,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
     public void HurtPlayer(float _recoilDirection)
     {
-        IsHurt = true;
+        CanMove = false;
+        CanBeHit = false;
 
         StartCoroutine(playerMovement.Recoil(_recoilDirection));
 
@@ -60,13 +68,22 @@ public class PlayerController : MonoBehaviour
 
     public void KillPlayer()
     {
+        CanMove = false;
         IsDying = true;
         playerCollider.enabled = false;
 
-        playerMovement.DisableMovement();
-        playerMovement.AscendPlayer();
+        playerMovement.JumpAfterDying();
 
         playerAnimation.PlayDeathAnimation();
         playerAudio.PlayPlayerDieSFX();
+    }
+
+    public void PreparePlayerForSceneTransition() // placeholder method name... please find something better
+    {
+        CanMove = false;
+        CanCollectItems = false;
+        CanBeHit = false;
+
+        StartCoroutine(playerMovement.StopMovementAfterDelay());
     }
 }

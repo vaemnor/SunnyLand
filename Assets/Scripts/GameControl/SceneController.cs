@@ -71,6 +71,7 @@ public class SceneController : MonoBehaviour
     private IEnumerator StartSceneTransitionAndLoadScene(int sceneBuildIndex)
     {
         sceneTransition.SetTrigger("startSceneTransition");
+        playerController.PreparePlayerForSceneTransition();
 
         yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
 
@@ -80,6 +81,7 @@ public class SceneController : MonoBehaviour
     private IEnumerator StartSceneTransitionAndLoadScene(string sceneName)
     {
         sceneTransition.SetTrigger("startSceneTransition");
+        playerController.PreparePlayerForSceneTransition();
 
         yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
 

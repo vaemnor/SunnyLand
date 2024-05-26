@@ -76,10 +76,12 @@ public class JumpingEnemy : Enemy
         if (isMovingRight)
         {
             Jump("right");
+            isMovingRight = false;
         }
         else
         {
             Jump("left");
+            isMovingRight = true;
         }
 
         isIdle = false;
@@ -109,15 +111,11 @@ public class JumpingEnemy : Enemy
         {
             rigidBody.velocity = new Vector2(rightDirection, jumpForce);
             spriteRenderer.flipX = true;
-
-            isMovingRight = false;
         }
         else if (direction == "left")
         {
             rigidBody.velocity = new Vector2(leftDirection, jumpForce);
             spriteRenderer.flipX = false;
-
-            isMovingRight = true;
         }
 
         isGrounded = false;

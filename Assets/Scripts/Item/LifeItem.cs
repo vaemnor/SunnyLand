@@ -4,6 +4,7 @@ using UnityEngine;
 public class LifeItem : MonoBehaviour
 {
     private GameController gameController;
+    private PlayerController playerController;
 
     private SpriteRenderer spriteRenderer;
     private Collider2D lifeItemCollider;
@@ -18,6 +19,7 @@ public class LifeItem : MonoBehaviour
     private void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         lifeItemCollider = GetComponent<Collider2D>();
@@ -26,7 +28,7 @@ public class LifeItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") == true)
+        if (collision.gameObject.CompareTag("Player") == true && playerController.CanCollectItems)
         {
             gameController.AddLives(livesToAdd);
 
