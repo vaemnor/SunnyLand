@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
     private void InitializeLivesAtGameStart()
     {
-        if (level == 0)
+        if (level <= 0)
         {
             WorldState.Lives = livesAtGameStart;
         }
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
 
     private void SaveLevelLivesAndPointsAtLevelStart()
     {
-        if (level != 0)
+        if (level >= 1)
         {
             WorldState.LevelAtLevelStart = WorldState.Level;
             WorldState.LivesAtLevelStart = WorldState.Lives;
