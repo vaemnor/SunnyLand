@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The vertical force of the recoil when hit.")]
     [SerializeField] private float recoilForceY = 0f;
 
-    [SerializeField] private Vector2 BoxCastSize;
-    [SerializeField] private float BoxCastOffset = 0f;
+    [SerializeField] private Vector2 boxCastSize = Vector2.zero;
+    [SerializeField] private float boxCastOffset = 0f;
     
     private float currentMoveInput = 0f;
 
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckIfIsGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, BoxCastSize, 0f, -transform.up, BoxCastOffset, groundLayer))
+        if (Physics2D.BoxCast(transform.position, boxCastSize, 0f, -transform.up, boxCastOffset, groundLayer))
         {
             return true;
         }
@@ -114,9 +114,9 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
     }
 
-    public IEnumerator StopMovementAfterDelay()
+    public IEnumerator StopMovementAfterDelay(float _stopPlayerHorizontalMovementDelay)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(_stopPlayerHorizontalMovementDelay);
 
         currentMoveInput = 0f;
     }
@@ -138,6 +138,6 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position - transform.up * BoxCastOffset, BoxCastSize);
+        Gizmos.DrawWireCube(transform.position - transform.up * boxCastOffset, boxCastSize);
     }
 }

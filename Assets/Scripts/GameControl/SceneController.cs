@@ -9,11 +9,11 @@ public class SceneController : MonoBehaviour
 
     private Animator sceneTransition;
 
-    /// <summary>
-    /// The amount of time (in seconds) to wait for the GameOverScreen scene to load.
-    /// </summary>
-    [Tooltip("The amount of time (in seconds) to wait for the GameOverScreen scene to load.")]
-    [SerializeField] private float loadGameOverScreenWaitTime = 0f;
+    [Tooltip("The delay (in seconds) for the player's horizontal movement to stop after the player enters a door.")]
+    [SerializeField] private float stopPlayerHorizontalMovementDelay = 0f;
+
+    [Tooltip("The delay (in seconds) for the GameOverScreen scene to load after the player dies.")]
+    [SerializeField] private float loadGameOverScreenDelay = 0f;
 
     private void Awake()
     {
@@ -26,11 +26,6 @@ public class SceneController : MonoBehaviour
     public void LoadTitleScreen()
     {
         StartCoroutine(StartSceneTransitionAndLoadScene("TitleScreen"));
-    }
-
-    public void LoadFirstLevel()
-    {
-        StartCoroutine(StartSceneTransitionAndLoadScene("Level1"));
     }
 
     public void LoadNextLevel()
@@ -52,15 +47,20 @@ public class SceneController : MonoBehaviour
 
     public IEnumerator LoadGameOverScreen()
     {
-        yield return new WaitForSeconds(loadGameOverScreenWaitTime);
+        yield return new WaitForSeconds(loadGameOverScreenDelay);
 
         StartCoroutine(StartSceneTransitionAndLoadScene("GameOverScreen"));
     }
 
     public void Retry()
     {
-        gameController.ResetLivesAndPoints();
-        LoadFirstLevel();
+        gameController.ResetLevelLivesAndPointsToValuesAtLevelStart();
+        ReloadCurrentLevel();
+    }
+
+    private void ReloadCurrentLevel()
+    {
+        StartCoroutine(StartSceneTransitionAndLoadScene(WorldState.Level));
     }
 
     public void QuitGame()
@@ -71,7 +71,7 @@ public class SceneController : MonoBehaviour
     private IEnumerator StartSceneTransitionAndLoadScene(int sceneBuildIndex)
     {
         sceneTransition.SetTrigger("startSceneTransition");
-        playerController.PreparePlayerForSceneTransition();
+        playerController.PreparePlayerForSceneTransition(stopPlayerHorizontalMovementDelay);
 
         yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
 
@@ -81,7 +81,7 @@ public class SceneController : MonoBehaviour
     private IEnumerator StartSceneTransitionAndLoadScene(string sceneName)
     {
         sceneTransition.SetTrigger("startSceneTransition");
-        playerController.PreparePlayerForSceneTransition();
+        playerController.PreparePlayerForSceneTransition(stopPlayerHorizontalMovementDelay);
 
         yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
 

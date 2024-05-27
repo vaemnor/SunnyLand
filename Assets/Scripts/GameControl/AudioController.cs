@@ -1,6 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSourceBGM;
+    private AudioSource backgroundMusic;
+
+    private void Awake()
+    {
+        backgroundMusic = GetComponent<AudioSource>();
+
+        backgroundMusic.volume = WorldState.BackgroundMusicVolume;
+    }
 }

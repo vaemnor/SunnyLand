@@ -6,25 +6,52 @@ public class GameController : MonoBehaviour
     private SceneController sceneController;
     private PlayerController playerController;
 
-    [SerializeField] private int level = 0;
-
     [SerializeField] private TMP_Text levelDisplay;
     [SerializeField] private TMP_Text livesDisplay;
     [SerializeField] private TMP_Text pointsDisplay;
+
+    [Tooltip("The current level of the scene.")]
+    [SerializeField] private int level = 0;
+
+    [Tooltip("The amount of lives at the start of the game.")]
+    [SerializeField] private int livesAtGameStart = 0;
 
     private void Start()
     {
         sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
+        WorldState.Level = level;
+        InitializeLivesAtGameStart();
+        SaveLevelLivesAndPointsAtLevelStart();
+
         UpdateLevelDisplay();
         UpdateLivesDisplay();
         UpdatePointsDisplay();
+
+        Cursor.visible = false;
+    }
+
+    private void InitializeLivesAtGameStart()
+    {
+        if (level == 0)
+        {
+            WorldState.Lives = livesAtGameStart;
+        }
+    }
+
+    private void SaveLevelLivesAndPointsAtLevelStart()
+    {
+        if (level != 0)
+        {
+            WorldState.LevelAtLevelStart = WorldState.Level;
+            WorldState.LivesAtLevelStart = WorldState.Lives;
+            WorldState.PointsAtLevelStart = WorldState.Points;
+        }
     }
 
     public void UpdateLevelDisplay()
     {
-        WorldState.Level = level;
         levelDisplay.text = $"Level: {WorldState.Level}";
     }
 
@@ -38,9 +65,9 @@ public class GameController : MonoBehaviour
         pointsDisplay.text = $"Points: {WorldState.Points}";
     }
 
-    public void AddLives(int livesToAdd)
+    public void AddLives(int _livesToAdd)
     {
-        WorldState.Lives += livesToAdd;
+        WorldState.Lives += _livesToAdd;
         UpdateLivesDisplay();
     }
 
@@ -48,9 +75,10 @@ public class GameController : MonoBehaviour
     {
         if (playerController.CanBeHit)
         {
-            if (WorldState.Lives > 1)
+            RemoveLife();
+
+            if (WorldState.Lives > 0)
             {
-                RemoveLife();
                 playerController.HurtPlayer(recoilDirection);
             }
             else
@@ -67,21 +95,22 @@ public class GameController : MonoBehaviour
         UpdateLivesDisplay();
     }
 
-    public void AddPoints(int pointsToAdd)
+    public void AddPoints(int _pointsToAdd)
     {
-        WorldState.Points += pointsToAdd;
-        UpdatePointsDisplay();
-    }
-
-    public void RemovePoints(int pointsToRemove)
-    {
-        WorldState.Points -= pointsToRemove;
+        WorldState.Points += _pointsToAdd;
         UpdatePointsDisplay();
     }
 
     public void ResetLivesAndPoints()
     {
-        WorldState.Lives = 3;
+        WorldState.Lives = livesAtGameStart;
         WorldState.Points = 0;
+    }
+
+    public void ResetLevelLivesAndPointsToValuesAtLevelStart()
+    {
+        WorldState.Level = WorldState.LevelAtLevelStart;
+        WorldState.Lives = WorldState.LivesAtLevelStart;
+        WorldState.Points = WorldState.PointsAtLevelStart;
     }
 }

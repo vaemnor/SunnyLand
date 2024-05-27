@@ -1628,9 +1628,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0009259259
-    width: 0.7395834
-    height: 0.37037036
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -3026,7 +3026,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 24c5e2f4628218543a892318dbc6d016, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3122,7 +3122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df0aea61345fb744b02fbbfebe27ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSourceBGM: {fileID: 1080567143}
 --- !u!1001 &1100136649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3874,7 +3873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0edec0bad5e8d48aaee32bd6eb67c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadGameOverScreenWaitTime: 1.5
+  stopPlayerHorizontalMovementDelay: 0.2
+  loadGameOverScreenDelay: 1.5
 --- !u!4 &1295965413
 Transform:
   m_ObjectHideFlags: 0
@@ -4511,10 +4511,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebb607cda1ed124c94439653c482465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
   levelDisplay: {fileID: 1219713072}
   livesDisplay: {fileID: 657430069}
   pointsDisplay: {fileID: 11986146}
+  level: 1
+  livesAtGameStart: 3
 --- !u!4 &1398990079
 Transform:
   m_ObjectHideFlags: 0

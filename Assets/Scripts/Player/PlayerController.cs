@@ -78,12 +78,12 @@ public class PlayerController : MonoBehaviour
         playerAudio.PlayPlayerDieSFX();
     }
 
-    public void PreparePlayerForSceneTransition() // placeholder method name... please find something better
+    public void PreparePlayerForSceneTransition(float _stopPlayerHorizontalMovementDelay)
     {
         CanMove = false;
         CanCollectItems = false;
         CanBeHit = false;
 
-        StartCoroutine(playerMovement.StopMovementAfterDelay());
+        StartCoroutine(playerMovement.StopMovementAfterDelay(_stopPlayerHorizontalMovementDelay));
     }
 }

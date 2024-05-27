@@ -412,8 +412,8 @@ MonoBehaviour:
   jumpForce: 16
   recoilForceX: 1.5
   recoilForceY: 0.5
-  BoxCastSize: {x: 0.75, y: 0.5625}
-  BoxCastOffset: 0.78125
+  boxCastSize: {x: 0.75, y: 0.5625}
+  boxCastOffset: 0.78125
 --- !u!114 &5998751704717940929
 MonoBehaviour:
   m_ObjectHideFlags: 0
