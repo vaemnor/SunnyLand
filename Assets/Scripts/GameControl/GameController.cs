@@ -28,7 +28,10 @@ public class GameController : MonoBehaviour
         UpdateLevelDisplay();
         UpdateLivesDisplay();
         UpdatePointsDisplay();
+    }
 
+    private void Awake()
+    {
         Cursor.visible = false;
     }
 
