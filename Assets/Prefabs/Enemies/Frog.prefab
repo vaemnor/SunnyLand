@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8358719466171598062}
   - component: {fileID: 6550956563338843110}
   - component: {fileID: 4761149066878463295}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}

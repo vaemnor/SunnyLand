@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5694494007589404757}
   - component: {fileID: 7513210520865491246}
   - component: {fileID: 3992977800891982088}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Eagle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

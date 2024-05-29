@@ -8,8 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAnimation playerAnimation;
     private PlayerAudio playerAudio;
 
+    private LayerMask playerLayer;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidBody;
+
     private LayerMask groundLayer;
 
     [SerializeField] private float moveSpeed = 0f;
@@ -32,8 +34,10 @@ public class PlayerMovement : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerAudio = GetComponent<PlayerAudio>();
 
+        playerLayer = LayerMask.NameToLayer("Player");
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
+
         groundLayer = LayerMask.GetMask("Ground");
     }
 
@@ -91,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Recoil(float _recoilDirection)
     {
+        gameObject.layer = 0; // Disables collision between player and enemy
+
         currentMoveInput = _recoilDirection;
         moveSpeed *= recoilForceX;
 
@@ -100,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(0f);
         }
+
+        gameObject.layer = playerLayer; // Enables collision between player and enemy
 
         currentMoveInput = 0f;
         moveSpeed /= recoilForceX;
