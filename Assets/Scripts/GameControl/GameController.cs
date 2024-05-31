@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_Text livesDisplay;
     [SerializeField] private TMP_Text pointsDisplay;
 
-    [Tooltip("The current level of the scene.")]
+    [Tooltip("The level of the scene.")]
     [SerializeField] private int level = 0;
 
     [Tooltip("The amount of lives at the start of the game.")]
@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour
 
     private void InitializeLivesAtGameStart()
     {
-        if (level <= 0)
+        if (WorldState.Lives <= 0)
         {
             WorldState.Lives = livesAtGameStart;
         }
