@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Ground
+  - NextLevelDoor
+  - RetryDoor
+  - TitleScreenDoor
   layers:
   - Default
   - TransparentFX

@@ -25,6 +25,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadTitleScreen()
     {
+        gameController.ResetLivesAndPoints();
         StartCoroutine(StartSceneTransitionAndLoadScene("TitleScreen"));
     }
 
@@ -63,10 +64,7 @@ public class SceneController : MonoBehaviour
         StartCoroutine(StartSceneTransitionAndLoadScene(WorldState.Level));
     }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+    
 
     private IEnumerator StartSceneTransitionAndLoadScene(int sceneBuildIndex)
     {
@@ -86,5 +84,22 @@ public class SceneController : MonoBehaviour
         yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
 
         SceneManager.LoadScene(sceneName);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            StartCoroutine(QuitGame());
+        }
+    }
+
+    public IEnumerator QuitGame()
+    {
+        sceneTransition.SetTrigger("startSceneTransition");
+
+        yield return new WaitForSeconds(sceneTransition.GetCurrentAnimatorClipInfo(0).Length);
+
+        Application.Quit();
     }
 }

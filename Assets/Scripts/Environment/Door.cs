@@ -11,9 +11,20 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") == true)
+        if (collision.CompareTag("Player"))
         {
-            sceneController.LoadNextLevel();
+            if (gameObject.CompareTag("NextLevelDoor"))
+            {
+                sceneController.LoadNextLevel();
+            }
+            else if (gameObject.CompareTag("RetryDoor"))
+            {
+                sceneController.Retry();
+            }
+            else if (gameObject.CompareTag("TitleScreenDoor"))
+            {
+                sceneController.LoadTitleScreen();
+            }
         }
     }
 }
